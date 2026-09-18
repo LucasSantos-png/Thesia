@@ -6,9 +6,11 @@ function doGet() {
 }
 
 //objeto que armazena os IDs de arquivos usados do drive
+const propriedades = PropertiesService.getScriptProperties();
+
 const CONFIG = {
-  PLANILHA_ID: 'xxxxxxxxxxx',
-  MODELO_DOC_ID: 'xxxxxxxxxx'
+  PLANILHA_ID: propriedades.getProperty('PLANILHA_ID'),
+  MODELO_DOC_ID: propriedades.getProperty('MODELO_DOC_ID')
 }
 
 /*função que salva os dados na planilha

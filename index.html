@@ -26,6 +26,7 @@
     <input type="text" id="titulo">
     <br>
 
+
     <label>Aluno 1: </label>
     <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
     <br>
@@ -44,16 +45,47 @@
 
     <h2>Artigo Científico</h2>
 
-    <label>Adequação do tema com as linhas de pesquisa: </label>
-    <input type="text" id="notaArtigo" inputmode="decimal" placeholder="Ex: 8,5">
+    <label>1. Adequação do tema com as linhas de pesquisa: <br> Máximo: 1,0 </label>
+    <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5">
     <br>
+
+    <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso 
+      de forma integrada: <br> Máximo: 1,0 </label>
+    <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5">
+    <br>
+
+    <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos 
+      para resolução de problemas dentro da área de formação: <br> Máximo: 2,0 </label>
+    <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5">
+    <br>
+
+    <label>4. Rigor metodológico e sua relação com a análise de resultados: <br> Máximo: 2,0 </label>
+    <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5">
+    <br>
+
+    <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <br> Máximo: 2,0 </label>
+    <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5">
+    <br>
+
+    <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação 
+      da linguagem: <br> Máximo: 1,0 </label>
+    <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5">
+    <br>
+
+    <label>7. Qualidade e originalidade dos argumentos: <br> Máximo: 1,0 </label>
+    <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5">
+    <br>
+
+
+    <h2>Relatório Técnico</h2>
 
     <label>Relatório Técnico: </label>
     <input type="text" id="notaRelatorio" inputmode="decimal" placeholder="Ex: 8,5">
 
+
     <h2>Nota oral: </h2>
 
-    <!--labels mudam o nome conforme digitam-->
+    <!--labels mudam o nome conforme são digitados-->
     <label> Aluno 1 <span id="nomeAluno1"></span>: </label>
     <input type="text" id="oral1" inputmode="decimal">
     <br>
@@ -88,11 +120,11 @@
 
 
     <script>
-
-      function converterNota(valor) 
+      //função que converte de texto para número e verifica se o valor é válido
+      function converterNota(valor, notaMaxima) 
       {
-        //remove espaços
-        valor = valor.trim();
+        //remove espaços - "/\s+/g" pega os espaços e os remove (troca por '')
+        valor = valor.replace(/\s+/g,'');
 
         //aceita tanto 8,5 quanto 8.5 - troca virgula por ponto
         valor = valor.replace(',','.');
@@ -101,11 +133,14 @@
         const nota = parseFloat(valor);
 
         //verifica se está vazio
-        if (isNaN(nota)) {
+        if (isNaN(nota)) 
+        {
           return null;
         }
-        //verifica se é um numero valido - >=0 ou <=10
-        if (nota < 0 || nota > 10) {
+
+        //verifica se é um numero valido - >=0 ou <=nota máxima
+        if (nota < 0 || nota > notaMaxima) 
+        {
           return null;
         }
 
@@ -123,25 +158,39 @@
 
           titulo: document.getElementById("titulo").value.trim(),
 
-          artigo: converterNota(document.getElementById("notaArtigo").value),
+          //joga as notas na função de converter nota - 
+          //dados recebidos aqui (valor da nota, nota máxima permitida)
+          artigo1: converterNota(document.getElementById("artigo1").value, 1),
 
-          relatorio: converterNota(document.getElementById("notaRelatorio").value),
+          artigo2: converterNota(document.getElementById("artigo2").value, 1),
+
+          artigo3: converterNota(document.getElementById("artigo3").value, 2),
+
+          artigo4: converterNota(document.getElementById("artigo4").value, 2),
+
+          artigo5: converterNota(document.getElementById("artigo5").value, 2),
+
+          artigo6: converterNota(document.getElementById("artigo6").value, 1),
+
+          artigo7: converterNota(document.getElementById("artigo7").value, 1),
+
+          relatorio: converterNota(document.getElementById("notaRelatorio").value, 10),
 
           aluno1: document.getElementById("aluno1").value.trim(),
 
-          oral1: converterNota(document.getElementById("oral1").value),
+          oral1: converterNota(document.getElementById("oral1").value, 10),
 
           aluno2: document.getElementById("aluno2").value.trim(),
 
-          oral2: converterNota(document.getElementById("oral2").value),
+          oral2: converterNota(document.getElementById("oral2").value, 10),
 
           aluno3: document.getElementById("aluno3").value.trim(),
 
-          oral3: converterNota(document.getElementById("oral3").value),
+          oral3: converterNota(document.getElementById("oral3").value, 10),
 
           aluno4: document.getElementById("aluno4").value.trim(),
 
-          oral4: converterNota(document.getElementById("oral4").value)
+          oral4: converterNota(document.getElementById("oral4").value, 10)
         };
 
         return dados;
@@ -149,13 +198,34 @@
 
       function validarDados(dados) 
       {
-        if(dados.professor === "" || dados.titulo === "" || dados.aluno1 === "" || dados.aluno2 === "" || 
-          dados.aluno3 === "" || dados.aluno4 === "" || dados.artigo === null || dados.relatorio === null || 
-          dados.oral1 === null || dados.oral2 === null || dados.oral3 === null || dados.oral4 === null) 
+        if (
+          dados.professor === "" || 
+          dados.titulo === "" || 
+
+          dados.aluno1 === "" || 
+          dados.aluno2 === "" || 
+          dados.aluno3 === "" || 
+          dados.aluno4 === "" || 
+
+          dados.artigo1 === null || 
+          dados.artigo2 === null ||
+          dados.artigo3 === null ||
+          dados.artigo4 === null ||
+          dados.artigo5 === null ||
+          dados.artigo6 === null ||
+          dados.artigo7 === null ||
+
+          dados.relatorio === null || 
+
+          dados.oral1 === null || 
+          dados.oral2 === null || 
+          dados.oral3 === null || 
+          dados.oral4 === null) 
           
         {
-        return false;
+          return false;
         }
+
         //não precisa de else pois a função se encerra em caso de false
         return true;
       }
@@ -173,15 +243,20 @@
         }
         
         //se dados === true então calcula as notas finais
+        //peso das notas
         const pesoArtigo = 0.3
         const pesoRelatorio = 0.3
         const pesoOral = 0.4
 
-        //notas finais
-        const final1 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
-        const final2 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
-        const final3 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
-        const final4 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
+        //soma das notas
+        const totalArtigo = dados.artigo1 + dados.artigo2 + dados.artigo3 
+        + dados.artigo4 + dados.artigo5 + dados.artigo6 + dados.artigo7;
+
+        //notas finais - soma das notas com seus respectivos pesos
+        const final1 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
+        const final2 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
+        const final3 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
+        const final4 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
  
         //exibe os resultados nos parágrafos de mensagem - .toFixed(2) fixa máximo de 2 casas decimais - .replace troca ponto por virgula
         document.getElementById("resultado1").innerText = dados.aluno1 + ": " + final1.toFixed(2).replace('.', ',');
