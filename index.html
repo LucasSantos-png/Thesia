@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <base target="_top">
+
+    <style>
+      body 
+      {
+        background-color: #2b2b2b;
+        color: #f2f2f2
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <h1>Thesia</h1>
+
+    <!--Inputs de dados-->
+    <label>Professor: </label>
+    <input type="text" id="professor">
+    <br>
+
+    <label>Título do TCC: </label>
+    <input type="text" id="titulo">
+    <br>
+
+    <label>Aluno 1: </label>
+    <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+    <br>
+
+    <label>Aluno 2: </label>
+    <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
+    <br>
+
+    <label>Aluno 3: </label>
+    <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
+    <br>
+
+    <label>Aluno 4: </label>
+    <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
+
+
+    <h2>Artigo Científico</h2>
+
+    <label>Adequação do tema com as linhas de pesquisa: </label>
+    <input type="text" id="notaArtigo" inputmode="decimal" placeholder="Ex: 8,5">
+    <br>
+
+    <label>Relatório Técnico: </label>
+    <input type="text" id="notaRelatorio" inputmode="decimal" placeholder="Ex: 8,5">
+
+    <h2>Nota oral: </h2>
+
+    <!--labels mudam o nome conforme digitam-->
+    <label> Aluno 1 <span id="nomeAluno1"></span>: </label>
+    <input type="text" id="oral1" inputmode="decimal">
+    <br>
+
+    <label> Aluno 2 <span id="nomeAluno2"></span>: </label>
+    <input type="text" id="oral2" inputmode="decimal">
+    <br>
+
+    <label> Aluno 3 <span id="nomeAluno3"></span>: </label>
+    <input type="text" id="oral3" inputmode="decimal">
+    <br>
+
+    <label> Aluno 4 <span id="nomeAluno4"></span>: </label>
+    <input type="text" id="oral4" inputmode="decimal">
+    <br>
+
+    
+    <button onclick="calcular()">Calcular</button>
+
+    <button onclick="salvarAvaliacao()">Salvar avaliação</button>
+
+    <p id="mensagem"></p>
+
+
+
+    <h2>Resultado</h2>
+
+    <p id="resultado1"></p>
+    <p id="resultado2"></p>
+    <p id="resultado3"></p>
+    <p id="resultado4"></p>
+
+
+    <script>
+
+      function converterNota(valor) 
+      {
+        //remove espaços
+        valor = valor.trim();
+
+        //aceita tanto 8,5 quanto 8.5 - troca virgula por ponto
+        valor = valor.replace(',','.');
+
+        //converte texto em número
+        const nota = parseFloat(valor);
+
+        //verifica se está vazio
+        if (isNaN(nota)) {
+          return null;
+        }
+        //verifica se é um numero valido - >=0 ou <=10
+        if (nota < 0 || nota > 10) {
+          return null;
+        }
+
+        return nota;
+
+      }
+
+
+      function pegarDados() 
+      {
+        //cria o objeto DADOS que recebe todas informações em um único lugar
+        const dados = 
+        {
+          professor: document.getElementById("professor").value.trim(),
+
+          titulo: document.getElementById("titulo").value.trim(),
+
+          artigo: converterNota(document.getElementById("notaArtigo").value),
+
+          relatorio: converterNota(document.getElementById("notaRelatorio").value),
+
+          aluno1: document.getElementById("aluno1").value.trim(),
+
+          oral1: converterNota(document.getElementById("oral1").value),
+
+          aluno2: document.getElementById("aluno2").value.trim(),
+
+          oral2: converterNota(document.getElementById("oral2").value),
+
+          aluno3: document.getElementById("aluno3").value.trim(),
+
+          oral3: converterNota(document.getElementById("oral3").value),
+
+          aluno4: document.getElementById("aluno4").value.trim(),
+
+          oral4: converterNota(document.getElementById("oral4").value)
+        };
+
+        return dados;
+      }
+
+      function validarDados(dados) 
+      {
+        if(dados.professor === "" || dados.titulo === "" || dados.aluno1 === "" || dados.aluno2 === "" || 
+          dados.aluno3 === "" || dados.aluno4 === "" || dados.artigo === null || dados.relatorio === null || 
+          dados.oral1 === null || dados.oral2 === null || dados.oral3 === null || dados.oral4 === null) 
+          
+        {
+        return false;
+        }
+        //não precisa de else pois a função se encerra em caso de false
+        return true;
+      }
+
+      function calcular() 
+      {
+        const dados = pegarDados();
+
+        //se dados === false
+        if (!validarDados(dados)) 
+        {
+          document.getElementById("mensagem").innerText = "Preencha todos os campos corretamente";
+
+          return;
+        }
+        
+        //se dados === true então calcula as notas finais
+        const pesoArtigo = 0.3
+        const pesoRelatorio = 0.3
+        const pesoOral = 0.4
+
+        //notas finais
+        const final1 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
+        const final2 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
+        const final3 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
+        const final4 = (dados.artigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
+ 
+        //exibe os resultados nos parágrafos de mensagem - .toFixed(2) fixa máximo de 2 casas decimais - .replace troca ponto por virgula
+        document.getElementById("resultado1").innerText = dados.aluno1 + ": " + final1.toFixed(2).replace('.', ',');
+        document.getElementById("resultado2").innerText = dados.aluno2 + ": " + final2.toFixed(2).replace('.', ',');
+        document.getElementById("resultado3").innerText = dados.aluno3 + ": " + final3.toFixed(2).replace('.', ',');
+        document.getElementById("resultado4").innerText = dados.aluno4 + ": " + final4.toFixed(2).replace('.', ',');
+
+        //esconde a mensagem
+        document.getElementById("mensagem").innerText = "";
+
+      }
+
+      function salvarAvaliacao() 
+      {
+        const dados = pegarDados();
+
+        if (!validarDados(dados))
+        {
+          document.getElementById("mensagem").innerText = "Preencha todos os campos corretamente.";
+
+          return;
+        }
+
+        document.getElementById("mensagem").innerText = "Salvando avaliação..."
+
+        google.script.run
+          .withSuccessHandler(function(resultado) 
+          {
+            document.getElementById("resultado1").innerText = resultado.aluno1 + ": " + resultado.final1.toFixed(2).replace('.', ',');
+            document.getElementById("resultado2").innerText = resultado.aluno2 + ": " + resultado.final2.toFixed(2).replace('.', ',');
+            document.getElementById("resultado3").innerText = resultado.aluno3 + ": " + resultado.final3.toFixed(2).replace('.', ',');
+            document.getElementById("resultado4").innerText = resultado.aluno4 + ": " + resultado.final4.toFixed(2).replace('.', ',');
+
+            document.getElementById("mensagem").innerText = "Avaliação salva com sucesso!";
+          })
+
+          .withFailureHandler(function(erro)
+          {
+            document.getElementById("mensagem").innerText = "Erro: " + erro.message;
+          })
+          
+          .salvarAvaliacaoTeste(dados);
+
+      }
+
+
+
+      function atualizarNomeAluno(numeroAluno)
+      {
+        const campoAluno = document.getElementById("aluno" + numeroAluno);
+
+        const nomeExibido = document.getElementById("nomeAluno" + numeroAluno);
+
+        const nome = campoAluno.value.trim();
+
+        if (nome === "")
+        {
+          nomeExibido.innerText = "";
+        }
+
+        else
+        {
+          nomeExibido.innerText = "(" + nome + ")"
+        }
+      }
+
+
+ 
+      function salvar() 
+      {
+
+        /*recebe os dados digitados*/
+        const professor = document.getElementById("professor").value;
+        
+        const titulo = document.getElementById("titulo").value;
+
+        /*aplica a mensagem de retorno ao parágrafo*/
+        document.getElementById("mensagem").innerText = "Salvando...";
+
+        google.script.run
+          
+          //mensagem em caso de sucesso
+          .withSuccessHandler(function(resposta) {
+            document.getElementById("mensagem").innerText = resposta;
+          })
+
+          //mensagem em caso de fracasso
+          .withFailureHandler(function(erro) {
+            document.getElementById("mensagem").innerText = "Erro: " + erro;
+          })
+
+          /*salva na planilha*/
+          .salvarTeste(professor, titulo);
+      }
+
+
+
+      function gerarArquivo() 
+      {
+
+        /*recebe os dados digitados*/
+        const professor = document.getElementById("professor").value
+
+        const titulo = document.getElementById("titulo").value
+
+        /*aplica a mensagem de retorno ao parágrafo*/
+        document.getElementById("mensagem").innerText = "Gerando arquivo...";
+
+        google.script.run
+
+          //mensagem em caso de sucesso
+          .withSuccessHandler(function(resposta) {
+            document.getElementById("mensagem").innerText = resposta;
+          })
+          
+          //mensagem em caso de fracasso
+          .withFailureHandler(function(erro) {
+            document.getElementById("mensagem").innerText = "Erro: " + erro;
+          })
+        
+          /*cria o txt de teste*/
+          .criarArquivoTeste(professor, titulo);
+      }
+
+
+
+      function gerarDocumento() {
+
+        /*recebe os dados digitados*/
+        const professor = document.getElementById("professor").value;
+
+        const titulo = document.getElementById("titulo").value;
+
+        /*aplica a mensagem de retorno ao parágrafo*/
+        document.getElementById("mensagem").innerText = "Gerando documento..."
+
+        google.script.run
+
+          //mensagem em caso de sucesso
+          .withSuccessHandler(function(resposta) {
+            document.getElementById("mensagem").innerText = resposta;
+          })
+
+          //mensagem em caso de fracasso
+          .withFailureHandler(function(erro) {
+            document.getElementById("mensagem").innerText = "Erro: " + erro;
+          })
+
+          /*edita o doc de teste*/
+          .gerarDocumentoTeste(professor, titulo);
+      }
+
+
+    </script>
+
+  </body>
+
+</html>
