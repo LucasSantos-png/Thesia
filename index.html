@@ -18,8 +18,8 @@
     <h1>Thesia</h1>
 
     <!--Inputs de dados-->
-    <label>Professor: </label>
-    <input type="text" id="professor">
+    <label>Avaliador: </label>
+    <input type="text" id="avaliador">
     <br>
 
     <label>Título do TCC: </label>
@@ -154,7 +154,7 @@
         //cria o objeto DADOS que recebe todas informações em um único lugar
         const dados = 
         {
-          professor: document.getElementById("professor").value.trim(),
+          avaliador: document.getElementById("avaliador").value.trim(),
 
           titulo: document.getElementById("titulo").value.trim(),
 
@@ -199,7 +199,7 @@
       function validarDados(dados) 
       {
         if (
-          dados.professor === "" || 
+          dados.avaliador === "" || 
           dados.titulo === "" || 
 
           dados.aluno1 === "" || 
@@ -244,9 +244,9 @@
         
         //se dados === true então calcula as notas finais
         //peso das notas
-        const pesoArtigo = 0.3
-        const pesoRelatorio = 0.3
-        const pesoOral = 0.4
+        const pesoArtigo = 0.3;
+        const pesoRelatorio = 0.3;
+        const pesoOral = 0.4;
 
         //soma das notas
         const totalArtigo = dados.artigo1 + dados.artigo2 + dados.artigo3 
@@ -329,7 +329,7 @@
       {
 
         /*recebe os dados digitados*/
-        const professor = document.getElementById("professor").value;
+        const avaliador = document.getElementById("avaliador").value;
         
         const titulo = document.getElementById("titulo").value;
 
@@ -349,7 +349,7 @@
           })
 
           /*salva na planilha*/
-          .salvarTeste(professor, titulo);
+          .salvarTeste(avaliador, titulo);
       }
 
 
@@ -358,7 +358,7 @@
       {
 
         /*recebe os dados digitados*/
-        const professor = document.getElementById("professor").value
+        const avaliador = document.getElementById("avaliador").value
 
         const titulo = document.getElementById("titulo").value
 
@@ -378,7 +378,7 @@
           })
         
           /*cria o txt de teste*/
-          .criarArquivoTeste(professor, titulo);
+          .criarArquivoTeste(avaliador, titulo);
       }
 
 
@@ -386,7 +386,7 @@
       function gerarDocumento() {
 
         /*recebe os dados digitados*/
-        const professor = document.getElementById("professor").value;
+        const avaliador = document.getElementById("avaliador").value;
 
         const titulo = document.getElementById("titulo").value;
 
@@ -406,7 +406,7 @@
           })
 
           /*edita o doc de teste*/
-          .gerarDocumentoTeste(professor, titulo);
+          .gerarDocumentoTeste(avaliador, titulo);
       }
 
 
