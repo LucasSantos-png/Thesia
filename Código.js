@@ -29,8 +29,27 @@ function salvarAvaliacao(dados)
   //cria um id unico para a avaliação atual
   const idAvaliacao = Utilities.getUuid();
 
+
   //data/hora para os registros
   const dataHora = new Date();
+  //define fuso horário da sessão
+  const fusoHorario = Session.getScriptTimeZone();
+  //separa a data
+  const data = Utilities.formatDate(dataHora, fusoHorario, "dd/MM/yyyy");
+  //separa a hora
+  const hora = Utilities.formatDate(dataHora, fusoHorario, "HH:mm");
+  //separa o dia
+  const dia = Utilities.formatDate(dataHora, fusoHorario, "dd");
+  //separa o ano
+  const ano = Utilities.formatDate(dataHora, fusoHorario, "yyyy");
+
+  //escrever meses por extenso
+  const meses = ["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+  //separa o mes
+  const numeroMes = Number(Utilities.formatDate(dataHora, fusoHorario, "MM"));
+  //pega o nome do mes de acordo com o numeroMes (-1 pois arrays começam em 0)
+  const mes = meses[numeroMes - 1];
+
 
   //pesos das notas
   const pesoArtigo = 0.3;
@@ -71,7 +90,7 @@ function salvarAvaliacao(dados)
 
   //salva o resumo na aba AVALIACOES
   abaAvaliacoes.appendRow([
-    idAvaliacao, dataHora, dados.avaliador, dados.titulo, dados.aluno1, final1, dados.aluno2, final2, dados.aluno3, final3, dados.aluno4, final4
+    idAvaliacao, dataHora, dados.orientador, dados.titulo, dados.curso, dados.aluno1, dados.ra1, final1, dados.aluno2, dados.ra2, final2, dados.aluno3, dados.ra3, final3, dados.aluno4, dados.ra4, final4
   ]);
 
   // salva os critérios do artigo na aba ARTIGO
