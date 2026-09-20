@@ -100,23 +100,101 @@
     <br>
 
 
-    <h2>Nota oral: </h2>
+    <h2>Apresentação oral: </h2>
+
+    <label>1. A apresentação sistematizada do trabalho final de acordo com as normas indicadas:  (Máximo: 2,0) </label> <br>
 
     <!--labels mudam o nome conforme são digitados-->
-    <label> Aluno 1 <span id="nomeAluno1"></span>: </label>
-    <input type="text" id="oral1" inputmode="decimal">
+    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
+    <input type="text" id="oral1aluno1" inputmode="decimal">
     <br>
 
-    <label> Aluno 2 <span id="nomeAluno2"></span>: </label>
-    <input type="text" id="oral2" inputmode="decimal">
+    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
+    <input type="text" id="oral1aluno2" inputmode="decimal">
     <br>
 
-    <label> Aluno 3 <span id="nomeAluno3"></span>: </label>
-    <input type="text" id="oral3" inputmode="decimal">
+    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
+    <input type="text" id="oral1aluno3" inputmode="decimal">
     <br>
 
-    <label> Aluno 4 <span id="nomeAluno4"></span>: </label>
-    <input type="text" id="oral4" inputmode="decimal">
+    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
+    <input type="text" id="oral1aluno4" inputmode="decimal">
+    <br>
+
+
+    <label>2. A clareza da exposição e coerência argumentativa dos alunos:  Máximo: 2,5 </label> <br>
+
+    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
+    <input type="text" id="oral2aluno1" inputmode="decimal">
+    <br>
+
+    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
+    <input type="text" id="oral2aluno2" inputmode="decimal">
+    <br>
+
+    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
+    <input type="text" id="oral2aluno3" inputmode="decimal">
+    <br>
+
+    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
+    <input type="text" id="oral2aluno4" inputmode="decimal">
+    <br>
+
+
+    <label>3. O caráter científico do trabalho: a consistência dos dados e da fundamentação teórica: 2,5 </label> <br>
+
+    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
+    <input type="text" id="oral3aluno1" inputmode="decimal">
+    <br>
+
+    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
+    <input type="text" id="oral3aluno2" inputmode="decimal">
+    <br>
+
+    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
+    <input type="text" id="oral3aluno3" inputmode="decimal">
+    <br>
+
+    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
+    <input type="text" id="oral3aluno4" inputmode="decimal">
+    <br>
+
+
+    <label>4. A participação de todos os alunos do grupo na apresentação:  Máximo: 2,0 </label> <br>
+
+    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
+    <input type="text" id="oral4aluno1" inputmode="decimal">
+    <br>
+
+    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
+    <input type="text" id="oral4aluno2" inputmode="decimal">
+    <br>
+
+    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
+    <input type="text" id="oral4aluno3" inputmode="decimal">
+    <br>
+
+    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
+    <input type="text" id="oral4aluno4" inputmode="decimal">
+    <br>
+
+
+    <label>5. O respeito ao tempo de apresentação:  Máximo: 1,0 </label> <br>
+
+    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
+    <input type="text" id="oral5aluno1" inputmode="decimal">
+    <br>
+
+    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
+    <input type="text" id="oral5aluno2" inputmode="decimal">
+    <br>
+
+    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
+    <input type="text" id="oral5aluno3" inputmode="decimal">
+    <br>
+
+    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
+    <input type="text" id="oral5aluno4" inputmode="decimal">
     <br>
 
     
@@ -127,8 +205,7 @@
     <p id="mensagem"></p>
 
 
-
-    <h2>Resultado</h2>
+    <h2>Resultados</h2>
 
     <p id="resultado1"></p>
     <p id="resultado2"></p>
@@ -155,7 +232,7 @@
           return null;
         }
 
-        //verifica se é um numero invalido - <0 ou > nota máxima
+        //verifica se é um numero invalido - < 0 ou > nota máxima
         if (nota < 0 || nota > notaMaxima) 
         {
           return null;
@@ -205,22 +282,54 @@
 
           aluno1: document.getElementById("aluno1").value.trim(),
 
-          oral1: converterNota(document.getElementById("oral1").value, 10),
+          oral1aluno1: converterNota(document.getElementById("oral1aluno1").value, 2),
+
+          oral2aluno1: converterNota(document.getElementById("oral2aluno1").value, 2.5),
+
+          oral3aluno1: converterNota(document.getElementById("oral3aluno1").value, 2.5),
+
+          oral4aluno1: converterNota(document.getElementById("oral4aluno1").value, 2),
+
+          oral5aluno1: converterNota(document.getElementById("oral5aluno1").value, 1),
 
 
           aluno2: document.getElementById("aluno2").value.trim(),
 
-          oral2: converterNota(document.getElementById("oral2").value, 10),
+          oral1aluno2: converterNota(document.getElementById("oral1aluno2").value, 2),
+
+          oral2aluno2: converterNota(document.getElementById("oral2aluno2").value, 2.5),
+
+          oral3aluno2: converterNota(document.getElementById("oral3aluno2").value, 2.5),
+
+          oral4aluno2: converterNota(document.getElementById("oral4aluno2").value, 2),
+
+          oral5aluno2: converterNota(document.getElementById("oral5aluno2").value, 1),
 
 
           aluno3: document.getElementById("aluno3").value.trim(),
 
-          oral3: converterNota(document.getElementById("oral3").value, 10),
+          oral1aluno3: converterNota(document.getElementById("oral1aluno3").value, 2),
+
+          oral2aluno3: converterNota(document.getElementById("oral2aluno3").value, 2.5),
+
+          oral3aluno3: converterNota(document.getElementById("oral3aluno3").value, 2.5),
+
+          oral4aluno3: converterNota(document.getElementById("oral4aluno3").value, 2),
+
+          oral5aluno3: converterNota(document.getElementById("oral5aluno3").value, 1),
 
 
           aluno4: document.getElementById("aluno4").value.trim(),
 
-          oral4: converterNota(document.getElementById("oral4").value, 10)
+          oral1aluno4: converterNota(document.getElementById("oral1aluno4").value, 2),
+
+          oral2aluno4: converterNota(document.getElementById("oral2aluno4").value, 2.5),
+
+          oral3aluno4: converterNota(document.getElementById("oral3aluno4").value, 2.5),
+
+          oral4aluno4: converterNota(document.getElementById("oral4aluno4").value, 2),
+
+          oral5aluno4: converterNota(document.getElementById("oral5aluno4").value, 1)
         };
 
         return dados;
@@ -251,10 +360,30 @@
           dados.relatorio4 === null || 
           dados.relatorio5 === null || 
 
-          dados.oral1 === null || 
-          dados.oral2 === null || 
-          dados.oral3 === null || 
-          dados.oral4 === null ) 
+          dados.oral1aluno1 === null || 
+          dados.oral1aluno2 === null || 
+          dados.oral1aluno3 === null || 
+          dados.oral1aluno4 === null || 
+
+          dados.oral2aluno1 === null || 
+          dados.oral2aluno2 === null || 
+          dados.oral2aluno3 === null || 
+          dados.oral2aluno4 === null || 
+
+          dados.oral3aluno1 === null || 
+          dados.oral3aluno2 === null || 
+          dados.oral3aluno3 === null || 
+          dados.oral3aluno4 === null || 
+
+          dados.oral4aluno1 === null || 
+          dados.oral4aluno2 === null || 
+          dados.oral4aluno3 === null || 
+          dados.oral4aluno4 === null || 
+         
+          dados.oral5aluno1 === null ||
+          dados.oral5aluno2 === null ||
+          dados.oral5aluno3 === null ||
+          dados.oral5aluno4 === null ) 
           
         {
           return false;
@@ -289,11 +418,23 @@
         const totalRelatorio = dados.relatorio1 + dados.relatorio2 + dados.relatorio3
         + dados.relatorio4 + dados.relatorio5;
 
+        const totalOral1 = dados.oral1aluno1 + dados.oral2aluno1 + dados.oral3aluno1
+        + dados.oral4aluno1 + dados.oral5aluno1;
+
+        const totalOral2 = dados.oral1aluno2 + dados.oral2aluno2 + dados.oral3aluno2
+        + dados.oral4aluno2 + dados.oral5aluno2;
+        
+        const totalOral3 = dados.oral1aluno3 + dados.oral2aluno3 + dados.oral3aluno3
+        + dados.oral4aluno3 + dados.oral5aluno3;
+
+        const totalOral4 = dados.oral1aluno4 + dados.oral2aluno4 + dados.oral3aluno4
+        + dados.oral4aluno4 + dados.oral5aluno4;
+
         //notas finais - soma das notas com seus respectivos pesos
-        const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
-        const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
-        const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
-        const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
+        const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral1 * pesoOral);
+        const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral2 * pesoOral);
+        const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral3 * pesoOral);
+        const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral4 * pesoOral);
  
         //exibe os resultados nos parágrafos de mensagem - .toFixed(2) fixa máximo de 2 casas decimais - .replace troca ponto por virgula
         document.getElementById("resultado1").innerText = dados.aluno1 + ": " + final1.toFixed(2).replace('.', ',');
@@ -301,7 +442,7 @@
         document.getElementById("resultado3").innerText = dados.aluno3 + ": " + final3.toFixed(2).replace('.', ',');
         document.getElementById("resultado4").innerText = dados.aluno4 + ": " + final4.toFixed(2).replace('.', ',');
 
-        //esconde a mensagem de calculando / falha / sucesso
+        //esconde a mensagem de salvando / falha / sucesso
         document.getElementById("mensagem").innerText = "";
 
       }
@@ -313,6 +454,11 @@
         if (!validarDados(dados))
         {
           document.getElementById("mensagem").innerText = "Preencha todos os campos corretamente.";
+
+          document.getElementById("resultado1").innerText = "";
+          document.getElementById("resultado2").innerText = "";
+          document.getElementById("resultado3").innerText = "";
+          document.getElementById("resultado4").innerText = "";
 
           return;
         }
@@ -335,115 +481,36 @@
             document.getElementById("mensagem").innerText = "Erro: " + erro.message;
           })
           
-          .salvarAvaliacaoTeste(dados);
+          .salvarAvaliacao(dados);
 
       }
 
 
-      //função que exibe nome do aluno conforme é digitado
+      //função que exibe nome do aluno no <span> conforme é digitado
       function atualizarNomeAluno(numeroAluno)
       {
+        //pega o campo em que o nome foi digitado
         const campoAluno = document.getElementById("aluno" + numeroAluno);
 
-        const nomeExibido = document.getElementById("nomeAluno" + numeroAluno);
+        //agora busca pela classe de nomes ao invés de IDs, o "." antes de nomeAluno significa isso - classe
+        const nomesExibidos = document.querySelectorAll(".nomeAluno" + numeroAluno);
 
+        //remove os espaços antes / depois do nome
         const nome = campoAluno.value.trim();
 
-        if (nome === "")
+        nomesExibidos.forEach(function(nomeExibido) 
         {
-          nomeExibido.innerText = "";
-        }
+          if (nome === "")
+            {
+              nomeExibido.innerText = "";
+            }
 
-        else
-        {
-          nomeExibido.innerText = "(" + nome + ")"
-        }
-      }
+            else
+            {
+              nomeExibido.innerText = "(" + nome + ")"
+            }
+        });
 
-
- 
-      function salvar() 
-      {
-
-        /*recebe os dados digitados*/
-        const avaliador = document.getElementById("avaliador").value;
-        
-        const titulo = document.getElementById("titulo").value;
-
-        /*aplica a mensagem de retorno ao parágrafo*/
-        document.getElementById("mensagem").innerText = "Salvando...";
-
-        google.script.run
-          
-          //mensagem em caso de sucesso
-          .withSuccessHandler(function(resposta) {
-            document.getElementById("mensagem").innerText = resposta;
-          })
-
-          //mensagem em caso de fracasso
-          .withFailureHandler(function(erro) {
-            document.getElementById("mensagem").innerText = "Erro: " + erro;
-          })
-
-          /*salva na planilha*/
-          .salvarTeste(avaliador, titulo);
-      }
-
-
-
-      function gerarArquivo() 
-      {
-
-        /*recebe os dados digitados*/
-        const avaliador = document.getElementById("avaliador").value
-
-        const titulo = document.getElementById("titulo").value
-
-        /*aplica a mensagem de retorno ao parágrafo*/
-        document.getElementById("mensagem").innerText = "Gerando arquivo...";
-
-        google.script.run
-
-          //mensagem em caso de sucesso
-          .withSuccessHandler(function(resposta) {
-            document.getElementById("mensagem").innerText = resposta;
-          })
-          
-          //mensagem em caso de fracasso
-          .withFailureHandler(function(erro) {
-            document.getElementById("mensagem").innerText = "Erro: " + erro;
-          })
-        
-          /*cria o txt de teste*/
-          .criarArquivoTeste(avaliador, titulo);
-      }
-
-
-
-      function gerarDocumento() {
-
-        /*recebe os dados digitados*/
-        const avaliador = document.getElementById("avaliador").value;
-
-        const titulo = document.getElementById("titulo").value;
-
-        /*aplica a mensagem de retorno ao parágrafo*/
-        document.getElementById("mensagem").innerText = "Gerando documento..."
-
-        google.script.run
-
-          //mensagem em caso de sucesso
-          .withSuccessHandler(function(resposta) {
-            document.getElementById("mensagem").innerText = resposta;
-          })
-
-          //mensagem em caso de fracasso
-          .withFailureHandler(function(erro) {
-            document.getElementById("mensagem").innerText = "Erro: " + erro;
-          })
-
-          /*edita o doc de teste*/
-          .gerarDocumentoTeste(avaliador, titulo);
       }
 
 

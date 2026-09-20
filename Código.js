@@ -1,6 +1,7 @@
 /*função que exibe o site*/
 
-function doGet() {
+function doGet() 
+{
   return HtmlService.createHtmlOutputFromFile('index')
   .setTitle('Thesia');
 }
@@ -8,79 +9,14 @@ function doGet() {
 //objeto que armazena os IDs de arquivos usados do drive
 const propriedades = PropertiesService.getScriptProperties();
 
-const CONFIG = {
+const CONFIG = 
+{
   PLANILHA_ID: propriedades.getProperty('PLANILHA_ID'),
   MODELO_DOC_ID: propriedades.getProperty('MODELO_DOC_ID')
 }
 
-/*função que salva os dados na planilha
-  dados de entrada: data/hora (gerado automaticamente), avaliador, titulo*/
 
-function salvarTeste(avaliador, titulo) {
-
-  //pega planilha por id
-  const planilha = SpreadsheetApp.openById(CONFIG.PLANILHA_ID);
-  
-  //seleciona a página da planilha
-  const aba = planilha.getSheetByName('TESTE');
-
-  //adiciona linha com dados inseridos no banco
-  aba.appendRow([
-    new Date(),
-    avaliador,
-    titulo
-  ]);
-
-  return 'Dados salvos com sucesso!';
-}
-
-
-//função que gera um arquivo txt com os dados informados
-//saída: txt com Nome e Titulo do TCC
-function criarArquivoTeste(avaliador, titulo) {
-  const conteudo = 'Avaliador: ' + avaliador + '\n' + 'Título do TCC: ' + titulo;
-
-  DriveApp.createFile('Teste_Thesia.txt', conteudo);
-
-  return 'Arquivo criado com sucesso!';
-}
-
-//função que gera cópia do modelo de doc
-function gerarDocumentoTeste(avaliador, titulo) {
-
-  //id do arquivo de documento modelo a ser preenchido
-  const arquivoModelo = DriveApp.getFileById(CONFIG.MODELO_DOC_ID);
-
-  //faz uma cópia e altera o título
-  const copia = arquivoModelo.makeCopy(titulo + ' - ' + avaliador);
-
-  //abre o doc por id da cópia
-  const documento = DocumentApp.openById(copia.getId());
-
-  //pega o corpo do texto para editar
-  const corpo = documento.getBody();
-
-  //substitui os dados digitados no documento
-  corpo.replaceText('<<AVALIADOR>>', avaliador);
-
-  corpo.replaceText('<<TITULO>>', titulo);
-
-  //salva e fecha
-  documento.saveAndClose();
-
-  //pega a copia criada como arquivo do drive e converte em pdf
-  const copiaDocumento = DriveApp.getFileById(copia.getId());
-
-  const pdf = copiaDocumento.getAs(MimeType.PDF);
-
-  pdf.setName(copia.getName() + '.pdf');
-
-  DriveApp.createFile(pdf);
-
-  return 'Documento e PDF criados com sucesso!';
-}
-
-function salvarAvaliacaoTeste(dados)
+function salvarAvaliacao(dados)
 {
   //abre a planilha por id
   const planilha = SpreadsheetApp.openById(CONFIG.PLANILHA_ID);
@@ -89,7 +25,7 @@ function salvarAvaliacaoTeste(dados)
   const abaAvaliacoes = planilha.getSheetByName("AVALIACOES");
   const abaArtigo = planilha.getSheetByName("ARTIGO");
   const abaRelatorio = planilha.getSheetByName("RELATORIO");
-  //const abaOral = planilha.getSheetByName("ORAL");
+  const abaOral = planilha.getSheetByName("ORAL");
 
   //cria um id unico para a avaliação atual
   const idAvaliacao = Utilities.getUuid();
@@ -111,12 +47,25 @@ function salvarAvaliacaoTeste(dados)
   const totalRelatorio = dados.relatorio1 + dados.relatorio2 + dados.relatorio3
   + dados.relatorio4 + dados.relatorio5;
 
+  //soma dos critérios de Oratória por aluno
+  const totalOral1 = dados.oral1aluno1 + dados.oral2aluno1 + dados.oral3aluno1
+  + dados.oral4aluno1 + dados.oral5aluno1;
 
-  //soma as notas para gerar nota final
-  const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
-  const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
-  const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
-  const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
+  const totalOral2 = dados.oral1aluno2 + dados.oral2aluno2 + dados.oral3aluno2
+  + dados.oral4aluno2 + dados.oral5aluno2;
+
+  const totalOral3 = dados.oral1aluno3 + dados.oral2aluno3 + dados.oral3aluno3
+  + dados.oral4aluno3 + dados.oral5aluno3;
+
+  const totalOral4 = dados.oral1aluno4 + dados.oral2aluno4 + dados.oral3aluno4
+  + dados.oral4aluno4 + dados.oral5aluno4;
+
+
+  //soma as notas com seus pesos para gerar nota final
+  const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral1 * pesoOral);
+  const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral2 * pesoOral);
+  const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral3 * pesoOral);
+  const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral4 * pesoOral);
 
   //salva o resumo na aba AVALIACOES
   abaAvaliacoes.appendRow([
@@ -128,15 +77,39 @@ function salvarAvaliacaoTeste(dados)
     idAvaliacao, dados.artigo1, dados.artigo2, dados.artigo3, dados.artigo4, dados.artigo5, dados.artigo6, dados.artigo7, totalArtigo
   ]);
 
+  //salva os critérios de relatório na aba RELATORIO
   abaRelatorio.appendRow([
     idAvaliacao, dados.relatorio1, dados.relatorio2, dados.relatorio3, dados.relatorio4, dados.relatorio5, totalRelatorio
   ]);
+
+  //salva os critérios de oratória na aba ORAL
+  abaOral.appendRow([
+    idAvaliacao, 1, dados.aluno1, dados.oral1aluno1, dados.oral2aluno1, dados.oral3aluno1, dados.oral4aluno1, dados.oral5aluno1, totalOral1
+  ]);
+
+  abaOral.appendRow ([
+    idAvaliacao, 2, dados.aluno2, dados.oral1aluno2, dados.oral2aluno2, dados.oral3aluno2, dados.oral4aluno2, dados.oral5aluno2, totalOral2
+  ]);
+
+  abaOral.appendRow ([
+    idAvaliacao, 3, dados.aluno3, dados.oral1aluno3, dados.oral2aluno3, dados.oral3aluno3, dados.oral4aluno3, dados.oral5aluno3, totalOral3
+  ]);
+
+  abaOral.appendRow ([
+    idAvaliacao, 4, dados.aluno4, dados.oral1aluno4, dados.oral2aluno4, dados.oral3aluno4, dados.oral4aluno4, dados.oral5aluno4, totalOral4
+  ]);
+
 
   //devolve os resultados para o html
   return {
     idAvaliacao: idAvaliacao,
     totalArtigo: totalArtigo,
     totalRelatorio: totalRelatorio,
+
+    totalOral1: totalOral1,
+    totalOral2: totalOral2,
+    totalOral3: totalOral3,
+    totalOral4: totalOral4,
 
     aluno1: dados.aluno1,
     final1: final1,
