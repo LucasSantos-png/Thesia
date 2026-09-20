@@ -82,10 +82,14 @@ function gerarDocumentoTeste(avaliador, titulo) {
 
 function salvarAvaliacaoTeste(dados)
 {
+  //abre a planilha por id
   const planilha = SpreadsheetApp.openById(CONFIG.PLANILHA_ID);
 
+  //seleciona as abas usadas
   const abaAvaliacoes = planilha.getSheetByName("AVALIACOES");
   const abaArtigo = planilha.getSheetByName("ARTIGO");
+  const abaRelatorio = planilha.getSheetByName("RELATORIO");
+  //const abaOral = planilha.getSheetByName("ORAL");
 
   //cria um id unico para a avaliação atual
   const idAvaliacao = Utilities.getUuid();
@@ -99,16 +103,20 @@ function salvarAvaliacaoTeste(dados)
   const pesoOral = 0.4;
 
 
-  //soma dos critérios de Artigo e
+  //soma dos critérios de Artigo
   const totalArtigo = dados.artigo1 + dados.artigo2 + dados.artigo3
   + dados.artigo4 + dados.artigo5 + dados.artigo6 + dados.artigo7;
 
+  //soma dos critérios de Relatório
+  const totalRelatorio = dados.relatorio1 + dados.relatorio2 + dados.relatorio3
+  + dados.relatorio4 + dados.relatorio5;
+
 
   //soma as notas para gerar nota final
-  const final1 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
-  const final2 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
-  const final3 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
-  const final4 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
+  const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
+  const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
+  const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
+  const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
 
   //salva o resumo na aba AVALIACOES
   abaAvaliacoes.appendRow([
@@ -120,10 +128,15 @@ function salvarAvaliacaoTeste(dados)
     idAvaliacao, dados.artigo1, dados.artigo2, dados.artigo3, dados.artigo4, dados.artigo5, dados.artigo6, dados.artigo7, totalArtigo
   ]);
 
+  abaRelatorio.appendRow([
+    idAvaliacao, dados.relatorio1, dados.relatorio2, dados.relatorio3, dados.relatorio4, dados.relatorio5, totalRelatorio
+  ]);
+
   //devolve os resultados para o html
   return {
     idAvaliacao: idAvaliacao,
     totalArtigo: totalArtigo,
+    totalRelatorio: totalRelatorio,
 
     aluno1: dados.aluno1,
     final1: final1,

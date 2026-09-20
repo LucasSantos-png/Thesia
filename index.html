@@ -79,8 +79,25 @@
 
     <h2>Relatório Técnico</h2>
 
-    <label>Relatório Técnico: </label>
-    <input type="text" id="notaRelatorio" inputmode="decimal" placeholder="Ex: 8,5">
+    <label>1. O conteúdo promove a interdisciplinaridade: <br> Máximo: 2,0 </label>
+    <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5">
+    <br>
+
+    <label>2. O conteúdo busca uma linguagem próxima ao mercado: <br> Máximo: 1,0 </label>
+    <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5">
+    <br>
+
+    <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <br> Máximo: 3,0 </label>
+    <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5">
+    <br>
+
+    <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <br> Máximo: 2,0 </label>
+    <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5">
+    <br>
+
+    <label>5. O produto reflete as atividades de pesquisa realizadas: <br> Máximo: 2,0 </label>
+    <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5">
+    <br>
 
 
     <h2>Nota oral: </h2>
@@ -138,7 +155,7 @@
           return null;
         }
 
-        //verifica se é um numero valido - >=0 ou <=nota máxima
+        //verifica se é um numero invalido - <0 ou > nota máxima
         if (nota < 0 || nota > notaMaxima) 
         {
           return null;
@@ -174,19 +191,32 @@
 
           artigo7: converterNota(document.getElementById("artigo7").value, 1),
 
-          relatorio: converterNota(document.getElementById("notaRelatorio").value, 10),
+
+          relatorio1: converterNota(document.getElementById("relatorio1").value, 2),
+
+          relatorio2: converterNota(document.getElementById("relatorio2").value, 1),
+
+          relatorio3: converterNota(document.getElementById("relatorio3").value, 3),
+
+          relatorio4: converterNota(document.getElementById("relatorio4").value, 2),
+
+          relatorio5: converterNota(document.getElementById("relatorio5").value, 2),
+
 
           aluno1: document.getElementById("aluno1").value.trim(),
 
           oral1: converterNota(document.getElementById("oral1").value, 10),
 
+
           aluno2: document.getElementById("aluno2").value.trim(),
 
           oral2: converterNota(document.getElementById("oral2").value, 10),
 
+
           aluno3: document.getElementById("aluno3").value.trim(),
 
           oral3: converterNota(document.getElementById("oral3").value, 10),
+
 
           aluno4: document.getElementById("aluno4").value.trim(),
 
@@ -215,12 +245,16 @@
           dados.artigo6 === null ||
           dados.artigo7 === null ||
 
-          dados.relatorio === null || 
+          dados.relatorio1 === null || 
+          dados.relatorio2 === null || 
+          dados.relatorio3 === null || 
+          dados.relatorio4 === null || 
+          dados.relatorio5 === null || 
 
           dados.oral1 === null || 
           dados.oral2 === null || 
           dados.oral3 === null || 
-          dados.oral4 === null) 
+          dados.oral4 === null ) 
           
         {
           return false;
@@ -252,11 +286,14 @@
         const totalArtigo = dados.artigo1 + dados.artigo2 + dados.artigo3 
         + dados.artigo4 + dados.artigo5 + dados.artigo6 + dados.artigo7;
 
+        const totalRelatorio = dados.relatorio1 + dados.relatorio2 + dados.relatorio3
+        + dados.relatorio4 + dados.relatorio5;
+
         //notas finais - soma das notas com seus respectivos pesos
-        const final1 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
-        const final2 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
-        const final3 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
-        const final4 = (totalArtigo * pesoArtigo) + (dados.relatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
+        const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral1 * pesoOral);
+        const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral2 * pesoOral);
+        const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral3 * pesoOral);
+        const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (dados.oral4 * pesoOral);
  
         //exibe os resultados nos parágrafos de mensagem - .toFixed(2) fixa máximo de 2 casas decimais - .replace troca ponto por virgula
         document.getElementById("resultado1").innerText = dados.aluno1 + ": " + final1.toFixed(2).replace('.', ',');
@@ -264,7 +301,7 @@
         document.getElementById("resultado3").innerText = dados.aluno3 + ": " + final3.toFixed(2).replace('.', ',');
         document.getElementById("resultado4").innerText = dados.aluno4 + ": " + final4.toFixed(2).replace('.', ',');
 
-        //esconde a mensagem
+        //esconde a mensagem de calculando / falha / sucesso
         document.getElementById("mensagem").innerText = "";
 
       }
@@ -303,7 +340,7 @@
       }
 
 
-
+      //função que exibe nome do aluno conforme é digitado
       function atualizarNomeAluno(numeroAluno)
       {
         const campoAluno = document.getElementById("aluno" + numeroAluno);
