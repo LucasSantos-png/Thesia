@@ -18,64 +18,92 @@
     <h1>Thesia</h1>
 
     <!--Inputs de dados-->
-    <label>Avaliador: </label>
-    <input type="text" id="avaliador">
+    <label>Professor(a) Orientador(a): </label>
+    <input type="text" id="orientador">
     <br>
 
     <label>Título do TCC: </label>
     <input type="text" id="titulo">
     <br>
 
+    <form action="">
+      <p>Curso: </p>
 
-    <!--input dos nomes dos alunos participantes-->
+      <!--ADM vem marcado por padrão-->
+      <input type="radio" name="curso" id="ADM" value="Administração" checked>
+      <label for="ADM">Administração</label>
+
+      <input type="radio" name="curso" id="EC" value="Engenharia de Computação">
+      <label for="EC">Engenharia de Computação</label>
+
+    </form>
+
+
+    <!--input dos nomes dos alunos participantes e seus RAs-->
     <label>Aluno 1: </label>
     <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+    <br>
+
+    <label>RA: </label>
+    <input type="text" id="RA1">
     <br>
 
     <label>Aluno 2: </label>
     <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
     <br>
 
+    <label>RA: </label>
+    <input type="text" id="RA2">
+    <br>
+
     <label>Aluno 3: </label>
     <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
     <br>
 
+    <label>RA: </label>
+    <input type="text" id="RA3">
+    <br>
+
     <label>Aluno 4: </label>
     <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
+    <br>
+
+    <label>RA: </label>
+    <input type="text" id="RA4">
 
 
     <!--notas dos critérios de artigo científico-->
     <h2>Artigo Científico</h2>
 
     <label>1. Adequação do tema com as linhas de pesquisa: <br> Máximo: 1,0 </label>
-    <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5">
+    <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
     <br>
 
     <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso 
       de forma integrada: <br> Máximo: 1,0 </label>
-    <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5">
+    <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
     <br>
 
     <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos 
       para resolução de problemas dentro da área de formação: <br> Máximo: 2,0 </label>
-    <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5">
+    <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
     <br>
 
     <label>4. Rigor metodológico e sua relação com a análise de resultados: <br> Máximo: 2,0 </label>
-    <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5">
+    <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
     <br>
 
     <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <br> Máximo: 2,0 </label>
-    <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5">
+    <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
     <br>
 
     <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação 
       da linguagem: <br> Máximo: 1,0 </label>
-    <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5">
+    <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
     <br>
 
     <label>7. Qualidade e originalidade dos argumentos: <br> Máximo: 1,0 </label>
-    <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5">
+    <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
     <br>
 
 
@@ -83,23 +111,23 @@
     <h2>Relatório Técnico</h2>
 
     <label>1. O conteúdo promove a interdisciplinaridade: <br> Máximo: 2,0 </label>
-    <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5">
+    <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
     <br>
 
     <label>2. O conteúdo busca uma linguagem próxima ao mercado: <br> Máximo: 1,0 </label>
-    <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5">
+    <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
     <br>
 
     <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <br> Máximo: 3,0 </label>
-    <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5">
+    <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
     <br>
 
     <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <br> Máximo: 2,0 </label>
-    <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5">
+    <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
     <br>
 
     <label>5. O produto reflete as atividades de pesquisa realizadas: <br> Máximo: 2,0 </label>
-    <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5">
+    <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
     <br>
 
 
@@ -110,95 +138,95 @@
 
     <!--labels mudam o nome conforme são digitados-->
     <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral1aluno1" inputmode="decimal">
+    <input type="text" id="oral1aluno1" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral1aluno2" inputmode="decimal">
+    <input type="text" id="oral1aluno2" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral1aluno3" inputmode="decimal">
+    <input type="text" id="oral1aluno3" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral1aluno4" inputmode="decimal">
+    <input type="text" id="oral1aluno4" inputmode="decimal" class="nota">
     <br>
 
 
     <label>2. A clareza da exposição e coerência argumentativa dos alunos:  Máximo: 2,5 </label> <br>
 
     <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral2aluno1" inputmode="decimal">
+    <input type="text" id="oral2aluno1" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral2aluno2" inputmode="decimal">
+    <input type="text" id="oral2aluno2" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral2aluno3" inputmode="decimal">
+    <input type="text" id="oral2aluno3" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral2aluno4" inputmode="decimal">
+    <input type="text" id="oral2aluno4" inputmode="decimal" class="nota">
     <br>
 
 
     <label>3. O caráter científico do trabalho: a consistência dos dados e da fundamentação teórica: 2,5 </label> <br>
 
     <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral3aluno1" inputmode="decimal">
+    <input type="text" id="oral3aluno1" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral3aluno2" inputmode="decimal">
+    <input type="text" id="oral3aluno2" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral3aluno3" inputmode="decimal">
+    <input type="text" id="oral3aluno3" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral3aluno4" inputmode="decimal">
+    <input type="text" id="oral3aluno4" inputmode="decimal" class="nota">
     <br>
 
 
     <label>4. A participação de todos os alunos do grupo na apresentação:  Máximo: 2,0 </label> <br>
 
     <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral4aluno1" inputmode="decimal">
+    <input type="text" id="oral4aluno1" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral4aluno2" inputmode="decimal">
+    <input type="text" id="oral4aluno2" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral4aluno3" inputmode="decimal">
+    <input type="text" id="oral4aluno3" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral4aluno4" inputmode="decimal">
+    <input type="text" id="oral4aluno4" inputmode="decimal" class="nota">
     <br>
 
 
     <label>5. O respeito ao tempo de apresentação:  Máximo: 1,0 </label> <br>
 
     <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral5aluno1" inputmode="decimal">
+    <input type="text" id="oral5aluno1" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral5aluno2" inputmode="decimal">
+    <input type="text" id="oral5aluno2" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral5aluno3" inputmode="decimal">
+    <input type="text" id="oral5aluno3" inputmode="decimal" class="nota">
     <br>
 
     <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral5aluno4" inputmode="decimal">
+    <input type="text" id="oral5aluno4" inputmode="decimal" class="nota">
     <br>
 
     
@@ -248,15 +276,99 @@
 
       }
 
+      
+      function filtrarNota(campo) 
+      {
+        //remove espaços do input
+        // \s significa "espaço em branco" -> + "um ou mais" -> g "todos" e troca por ""
+        let valor = campo.value.replace(/\s+/g,"");
+
+        //qualquer caractere que não seja numero virgula ou ponto vira = ""
+        valor = valor.replace(/[^0-9,.]/g, "");
+
+        //permite apenas um separador decimal (ponto ou virgula)
+        let resultado = "";
+        let contarSeparador = false;
+
+        //passa por todos caracteres do input
+        for (const caractere of valor)
+        {
+          //se o caractere for virgula ou ponto
+          if (caractere === "," || caractere === ".") 
+          {
+            //verifica se já encontrou um separador
+            if (contarSeparador) 
+            {
+              //se já encontrou (for true), remove o próximo separador e continua
+              continue;
+            }
+
+            //ao achar o primeiro separador, permite sua exibição e vira = true
+            contarSeparador = true;
+          }
+
+          //atribui cada verificação ao resultado, caractere por caractere
+          resultado += caractere;
+        }
+
+        campo.value = resultado;
+      }
+
+
+      //função que bloqueia caracteres invalidos em campos de nota
+      function bloquearCaracterInvalido(evento) 
+      {
+        const caractere = evento.key;
+
+        const teclasPermitidas = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
+
+        //permite comandos como Ctrl + A ou Ctrl + C nos campos de nota
+        if (evento.ctrlKey || evento.metaKey)
+        {
+          return;
+        }
+
+        //se forem caracteres permitidos, continua
+        if (teclasPermitidas.includes(caractere)) 
+        {
+          return;
+        }
+
+        //se não for um caractere válido, bloqueia
+        if (!/[0-9,.]/.test(caractere)) 
+        {
+          evento.preventDefault();
+        }
+      }
+
+
+      //aplica a função de bloqueio de caracteres em todos os campos de nota
+      document.querySelectorAll(".nota").forEach(function(campo) 
+      {
+        //impede a aparição de caracteres invalidos - ao digitar
+        campo.addEventListener("keydown", bloquearCaracterInvalido);
+
+        //filtra o input para um formato válido - ao colar
+        campo.addEventListener("input", function() 
+        {
+          filtrarNota(campo)
+        });
+      });
+
 
       function pegarDados() 
       {
+        //recebe o curso selecionado nos radio buttons
+        const cursoSelecionado = document.querySelector('input[name="curso"]:checked');
+
         //cria o objeto DADOS que recebe todas informações em um único lugar
         const dados = 
         {
-          avaliador: document.getElementById("avaliador").value.trim(),
+          orientador: document.getElementById("orientador").value.trim(),
 
           titulo: document.getElementById("titulo").value.trim(),
+
+          curso : cursoSelecionado.value,
 
           //joga as notas na função de converter nota - 
           //dados recebidos aqui (valor da nota, nota máxima permitida)
@@ -288,8 +400,10 @@
           relatorio5: converterNota(document.getElementById("relatorio5").value, 2),
 
 
-          //notas de oratória aluno 1
+          //notas de oratória e dados aluno 1
           aluno1: document.getElementById("aluno1").value.trim(),
+
+          ra1: document.getElementById("RA1").value.trim(),
 
           oral1aluno1: converterNota(document.getElementById("oral1aluno1").value, 2),
 
@@ -302,8 +416,10 @@
           oral5aluno1: converterNota(document.getElementById("oral5aluno1").value, 1),
 
 
-          //notas de oratória aluno 2
+          //notas de oratória e dados aluno 2
           aluno2: document.getElementById("aluno2").value.trim(),
+
+          ra2: document.getElementById("RA2").value.trim(),
 
           oral1aluno2: converterNota(document.getElementById("oral1aluno2").value, 2),
 
@@ -316,8 +432,10 @@
           oral5aluno2: converterNota(document.getElementById("oral5aluno2").value, 1),
 
 
-          //notas de oratória aluno 3
+          //notas de oratória e dados aluno 3
           aluno3: document.getElementById("aluno3").value.trim(),
+
+          ra3: document.getElementById("RA3").value.trim(),
 
           oral1aluno3: converterNota(document.getElementById("oral1aluno3").value, 2),
 
@@ -330,8 +448,10 @@
           oral5aluno3: converterNota(document.getElementById("oral5aluno3").value, 1),
 
 
-          //notas de oratória aluno 4
+          //notas de oratória e dados aluno 4
           aluno4: document.getElementById("aluno4").value.trim(),
+
+          ra4: document.getElementById("RA4").value.trim(),
 
           oral1aluno4: converterNota(document.getElementById("oral1aluno4").value, 2),
 
@@ -351,13 +471,18 @@
       function validarDados(dados) 
       {
         if (
-          dados.avaliador === "" || 
+          dados.orientador === "" || 
           dados.titulo === "" || 
 
           dados.aluno1 === "" || 
           dados.aluno2 === "" || 
           dados.aluno3 === "" || 
           dados.aluno4 === "" || 
+
+          dados.ra1 === "" ||
+          dados.ra2 === "" ||
+          dados.ra3 === "" ||
+          dados.ra4 === "" ||
 
           dados.artigo1 === null || 
           dados.artigo2 === null ||
@@ -406,7 +531,7 @@
         return true;
       }
 
-      //função usada para calcular as notas finais dos alunos
+      //função usada para calcular as notas finais dos alunos e exibir no html
       function calcular() 
       {
         const dados = pegarDados();
@@ -539,7 +664,6 @@
         });
 
       }
-
 
     </script>
 
