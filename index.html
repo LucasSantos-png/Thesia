@@ -7,8 +7,8 @@
     <style>
       body 
       {
-        background-color: #2b2b2b;
-        color: #f2f2f2
+        background-color: #f0f0f0;
+        color: #202020;
       }
     </style>
 
@@ -43,33 +43,27 @@
     <label>Aluno 1: </label>
     <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
     <br>
-
     <label>RA: </label>
-    <input type="text" id="RA1">
+    <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
     <br>
 
     <label>Aluno 2: </label>
     <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
     <br>
-
     <label>RA: </label>
-    <input type="text" id="RA2">
+    <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
     <br>
-
     <label>Aluno 3: </label>
     <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
     <br>
-
     <label>RA: </label>
-    <input type="text" id="RA3">
+    <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
     <br>
-
     <label>Aluno 4: </label>
     <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
     <br>
-
     <label>RA: </label>
-    <input type="text" id="RA4">
+    <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
 
 
     <!--notas dos critérios de artigo científico-->
@@ -356,6 +350,19 @@
       });
 
 
+      //permite apenas números nos campos de RA
+      document.querySelectorAll(".ra").forEach(function(campo)
+      {
+        campo.addEventListener("input", function()
+        {
+          campo.value =
+            campo.value
+              .replace(/[^0-9]/g, "")
+              .slice(0, 9);
+        });
+      });
+
+
       function pegarDados() 
       {
         //recebe o curso selecionado nos radio buttons
@@ -470,6 +477,10 @@
       //verifica se existe algum campo em branco ou com nota inválida
       function validarDados(dados) 
       {
+
+        //garante que o RA tenha 9 digitos
+        const raValido = /^\d{9}$/;
+
         if (
           dados.orientador === "" || 
           dados.titulo === "" || 
@@ -479,10 +490,10 @@
           dados.aluno3 === "" || 
           dados.aluno4 === "" || 
 
-          dados.ra1 === "" ||
-          dados.ra2 === "" ||
-          dados.ra3 === "" ||
-          dados.ra4 === "" ||
+          !raValido.test(dados.ra1) ||
+          !raValido.test(dados.ra2) ||
+          !raValido.test(dados.ra3) ||
+          !raValido.test(dados.ra4) ||
 
           dados.artigo1 === null || 
           dados.artigo2 === null ||
@@ -540,6 +551,11 @@
         if (!validarDados(dados)) 
         {
           document.getElementById("mensagem").innerText = "Preencha todos os campos corretamente";
+
+          document.getElementById("resultado1").innerText = "";
+          document.getElementById("resultado2").innerText = "";
+          document.getElementById("resultado3").innerText = "";
+          document.getElementById("resultado4").innerText = "";
 
           return;
         }
