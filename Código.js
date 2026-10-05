@@ -13,7 +13,7 @@ const CONFIG =
   PLANILHA_ID: propriedades.getProperty('PLANILHA_ID'),
   MODELO_DOC_ID: propriedades.getProperty('MODELO_DOC_ID'),
   PASTA_FICHAS_ID: propriedades.getProperty('PASTA_FICHAS_ID'),
-  //PASTA_PDFS_ID: propriedades.getProperty('PASTA_PDFS_ID')
+  PASTA_PDFS_ID: propriedades.getProperty('PASTA_PDFS_ID')
 }
 
 
@@ -157,10 +157,26 @@ function gerarFichaAvaliacao(dados, calculos, momento)
   //salva e fecha o documento
   documento.saveAndClose();
 
+  //puxa a pasta de fichas por id
+  const pastaPdfs = DriveApp.getFolderById(CONFIG.PASTA_PDFS_ID);
+
+  //puxa a copia que acabou de ser criada
+  const arquivoGoogleDocs = DriveApp.getFileById(copia.getId());
+
+  //converte a ficha para pdf
+  const blobPdf = arquivoGoogleDocs.getAs(MimeType.PDF).setName(nomeArquivo + ".pdf");
+
+  //salva na pasta de pdfs gerados
+  const arquivoPdf = pastaPdfs.createFile(blobPdf);
+
   //devolve informações sobre a ficha
   return {
     idDocumento: copia.getId(),
     urlDocumento: copia.getUrl(),
+
+    idPdf: arquivoPdf.getId(),
+    urlPdf: arquivoPdf.getUrl(),
+    
     nomeArquivo: nomeArquivo
   }
 }
