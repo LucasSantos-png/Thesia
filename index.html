@@ -5,11 +5,225 @@
     <base target="_top">
 
     <style>
-      body 
-      {
-        background-color: #f0f0f0;
-        color: #202020;
+
+      :root {
+        --azul: #0057A8;
+        --azul-escuro: #003B73;
+        --azul-hover: #004782;
+        --azul-claro: #EAF4FF;
+
+        --laranja: #F58220;
+        --laranja-hover: #D96D0B;
+        --laranja-claro: #FFF1E6;
+
+        --branco: #FFFFFF;
+        --fundo: #F4F6F8;
+
+        --texto: #1F2933;
+        --texto-secundario: #667085;
+
+        --borda: #D9DEE5;
+
+        --sombra: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+        --raio: 10px;
       }
+
+      /* CAMPOS DE TEXTO */
+
+      input[type="text"],
+      input[type="email"] {
+        display: block;
+
+        width: min(700px, 90%);
+        margin: 0 auto 10px;
+
+        padding: 12px 14px;
+
+        background-color: var(--branco);
+        color: var(--texto);
+
+        border: 1px solid var(--borda);
+        border-radius: 7px;
+
+        font-family: inherit;
+        font-size: 15px;
+
+        outline: none;
+
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+
+      /* efeito ao clicar no campo */
+
+      input[type="text"]:focus,
+      input[type="email"]:focus {
+        border-color: var(--azul);
+
+        box-shadow:
+          0 0 0 3px var(--azul-claro);
+      }
+
+
+      /* labels */
+
+      label {
+        display: block;
+
+        width: min(700px, 90%);
+        margin: 14px auto 6px;
+
+        color: var(--texto);
+
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+
+      /* campos de nota menores */
+
+      .nota {
+        width: 120px !important;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        text-align: center;
+
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+
+      /* RA um pouco menor que nomes/título */
+      input[id^="RA"] {
+        max-width: 250px;
+      }
+
+      /* OPÇÕES DE CURSO */
+
+      .curso-opcoes {
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 40px;
+
+        margin: 0;
+      }
+
+
+      /* sobrescreve o estilo dos labels */
+      .curso-item {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 8px;
+
+        width: auto !important;
+        margin: 0 !important;
+
+        font-size: 16px;
+        font-weight: 500;
+
+        cursor: pointer;
+      }
+
+
+      /* radio */
+
+      .curso-item input[type="radio"] {
+        width: 18px;
+        height: 18px;
+
+        margin: 0;
+
+        accent-color: var(--azul);
+
+        cursor: pointer;
+      }
+
+
+      /* BLOCO DO CURSO */
+
+      form {
+        width: min(700px, 90%);
+        margin: 25px auto;
+      }
+
+
+      /* título "Curso:" */
+
+      form p {
+        margin: 0 0 15px;
+
+        color: var(--texto);
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      /* NOME DO ALUNO + RA NA MESMA LINHA */
+
+      .aluno-linha {
+        display: flex;
+
+        width: min(700px, 90%);
+        margin: 18px auto;
+
+        gap: 20px;
+
+        align-items: flex-end;
+      }
+
+
+      /* campo do nome ocupa a maior parte */
+
+      .campo-aluno {
+        flex: 1;
+      }
+
+
+      /* RA fica menor */
+
+      .campo-ra {
+        flex: 0 0 190px;
+      }
+
+
+      /* corrige os labels dentro dessa estrutura */
+
+      .aluno-linha label {
+        width: auto;
+
+        margin: 0 0 6px;
+
+        display: block;
+      }
+
+
+      /* inputs passam a ocupar seus respectivos blocos */
+
+      .aluno-linha input[type="text"] {
+        width: 100%;
+
+        margin: 0;
+      }
+
+
+      /* sobrescreve nossa regra antiga do RA */
+
+      .campo-ra input[id^="RA"] {
+        width: 100%;
+
+        max-width: none;
+      }
+
     </style>
 
   </head>
@@ -27,38 +241,56 @@
     <br>
 
     <form action="">
-      <p>Curso: </p>
+      <p>Curso:</p>
 
-      <!--ADM vem marcado por padrão-->
-      <input type="radio" name="curso" id="ADM" value="Administração" checked>
-      <label for="ADM">Administração</label>
+      <div class="curso-opcoes">
 
-      <input type="radio" name="curso" id="EC" value="Engenharia de Computação">
-      <label for="EC">Engenharia de Computação</label>
+        <label class="curso-item">
+          <input type="radio" name="curso" id="ADM"value="Administração" checked>
+          <span>Administração</span>
+        </label>
 
+        <label class="curso-item">
+          <input type="radio" name="curso" id="EC" value="Engenharia de Computação">
+          <span>Engenharia de Computação</span>
+        </label>
+
+      </div>
     </form>
 
 
     <!--input dos nomes dos alunos participantes e seus RAs-->
-    <label>Aluno 1: </label>
-    <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
-    <br>
-    <label>RA: </label>
-    <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
-    <br>
+    <div class="aluno-linha">
+
+      <div class="campo-aluno">
+        <label for="aluno1">Aluno 1:</label>
+        <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+      </div>
+
+      <div class="campo-ra">
+        <label for="RA1">RA:</label>
+        <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
+      </div>
+
+    </div>
+
 
     <label>Aluno 2: </label>
     <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
-    <br>
+
     <label>RA: </label>
     <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
     <br>
+
+    
     <label>Aluno 3: </label>
     <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
-    <br>
+
     <label>RA: </label>
     <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
     <br>
+
+
     <label>Aluno 4: </label>
     <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
     <br>
