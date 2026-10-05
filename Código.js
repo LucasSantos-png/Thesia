@@ -176,7 +176,7 @@ function gerarFichaAvaliacao(dados, calculos, momento)
 
     idPdf: arquivoPdf.getId(),
     urlPdf: arquivoPdf.getUrl(),
-    
+
     nomeArquivo: nomeArquivo
   }
 }
@@ -280,6 +280,9 @@ function salvarAvaliacao(dados)
   //chama a função para gerar a ficha com os dados preenchidos
   const ficha = gerarFichaAvaliacao(dados, calculos, momento);
 
+  //chama a função que envia a ficha por email
+  enviarFichaEmail(dados, ficha, momento);
+
   //devolve os resultados para o html
   return {
     idAvaliacao: idAvaliacao,
@@ -303,4 +306,25 @@ function salvarAvaliacao(dados)
     aluno4: dados.aluno4,
     final4: final4
   };
+}
+
+//função que envia a ficha em pdf por email
+function enviarFichaEmail(dados, ficha, momento) 
+{
+  //pega o pdf gerado
+  const arquivoPdf = DriveApp.getFileById(ficha.idPdf);
+
+  //assunto do email
+  const assunto = "Thesia - Ficha de Avaliação - " + dados.titulo;
+
+  //texto do email
+  const mensagem = "Olá, \n\n" + "Sua avaliação referente ao TCC \"" + dados.titulo + "\" foi registrada com sucesso.\n\n" +
+  "Data: " + momento.data + "\n" + "Horário: " + momento.hora + "\n" + "Curso: " + dados.curso + "\n" + "Orientador(a): " + 
+  dados.orientador + "\n\n" + "A ficha de avaliação em PDF segue anexada a este e-mail.\n\n" + "Atenciosamente,\n" + "Thesia";
+
+  GmailApp.sendEmail(dados.email, assunto, mensagem,
+    {
+      attachments: [arquivoPdf.getBlob()], name: "Thesia"
+    }
+  );
 }
