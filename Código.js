@@ -13,7 +13,7 @@ const CONFIG =
   PLANILHA_ID: propriedades.getProperty('PLANILHA_ID'),
   MODELO_DOC_ID: propriedades.getProperty('MODELO_DOC_ID'),
   PASTA_FICHAS_ID: propriedades.getProperty('PASTA_FICHAS_ID'),
-  //PASTA_PDFS_ID: propriedades.getProperty('PASTA_PDFS_ID')
+  PASTA_PDFS_ID: propriedades.getProperty('PASTA_PDFS_ID')
 }
 
 
@@ -157,10 +157,26 @@ function gerarFichaAvaliacao(dados, calculos, momento)
   //salva e fecha o documento
   documento.saveAndClose();
 
+  //puxa a pasta de fichas por id
+  const pastaPdfs = DriveApp.getFolderById(CONFIG.PASTA_PDFS_ID);
+
+  //puxa a copia que acabou de ser criada
+  const arquivoGoogleDocs = DriveApp.getFileById(copia.getId());
+
+  //converte a ficha para pdf
+  const blobPdf = arquivoGoogleDocs.getAs(MimeType.PDF).setName(nomeArquivo + ".pdf");
+
+  //salva na pasta de pdfs gerados
+  const arquivoPdf = pastaPdfs.createFile(blobPdf);
+
   //devolve informações sobre a ficha
   return {
     idDocumento: copia.getId(),
     urlDocumento: copia.getUrl(),
+
+    idPdf: arquivoPdf.getId(),
+    urlPdf: arquivoPdf.getUrl(),
+
     nomeArquivo: nomeArquivo
   }
 }
@@ -264,6 +280,9 @@ function salvarAvaliacao(dados)
   //chama a função para gerar a ficha com os dados preenchidos
   const ficha = gerarFichaAvaliacao(dados, calculos, momento);
 
+  //chama a função que envia a ficha por email
+  enviarFichaEmail(dados, ficha, momento);
+
   //devolve os resultados para o html
   return {
     idAvaliacao: idAvaliacao,
@@ -287,4 +306,25 @@ function salvarAvaliacao(dados)
     aluno4: dados.aluno4,
     final4: final4
   };
+}
+
+//função que envia a ficha em pdf por email
+function enviarFichaEmail(dados, ficha, momento) 
+{
+  //pega o pdf gerado
+  const arquivoPdf = DriveApp.getFileById(ficha.idPdf);
+
+  //assunto do email
+  const assunto = "Thesia - Ficha de Avaliação - " + dados.titulo;
+
+  //texto do email
+  const mensagem = "Olá, \n\n" + "Sua avaliação referente ao TCC \"" + dados.titulo + "\" foi registrada com sucesso.\n\n" +
+  "Data: " + momento.data + "\n" + "Horário: " + momento.hora + "\n" + "Curso: " + dados.curso + "\n" + "Orientador(a): " + 
+  dados.orientador + "\n\n" + "A ficha de avaliação em PDF segue anexada a este e-mail.\n\n" + "Atenciosamente,\n" + "Thesia";
+
+  GmailApp.sendEmail(dados.email, assunto, mensagem,
+    {
+      attachments: [arquivoPdf.getBlob()], name: "Thesia"
+    }
+  );
 }
