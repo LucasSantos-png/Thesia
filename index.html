@@ -5,11 +5,359 @@
     <base target="_top">
 
     <style>
+      :root 
+      {
+        --azul: #0057A8;
+        --azul-escuro: #003B73;
+        --azul-hover: #004782;
+        --azul-claro: #EAF4FF;
+        --laranja: #F58220;
+        --laranja-hover: #D96D0B;
+        --laranja-claro: #FFF1E6;
+        --branco: #FAFAFA;
+        --fundo: #E1E7ED;
+        --texto: #1F2933;
+        --texto-secundario: #667085;
+        --borda: #D9DEE5;
+        --sombra: 0 4px 15px rgba(0, 0, 0, 0.08);
+        --raio: 10px;
+      }
+
+      *, *::before, *::after 
+      {
+        box-sizing: border-box;
+      }
+
+      html 
+      {
+        scroll-behavior: smooth;
+      }
+
       body 
       {
-        background-color: #f0f0f0;
-        color: #202020;
+        margin: 0;
+        padding: 0 0 50px;
+        background-color: var(--fundo);
+        color: var(--azul-escuro);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        line-height: 1.55;
+        min-height: 100vh;
       }
+
+      h1 
+      {
+        position: relative;
+        margin: 0 0 35px;
+        padding: 28px 40px;
+        min-height: 90px;
+        background: linear-gradient(135deg, var(--azul-escuro), var(--azul));
+        color: var(--branco);
+        display: flex;
+        align-items: center;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        border-bottom: 5px solid var(--laranja);
+      }
+
+      h1::after 
+      {
+        content: "Faculdade Engenheiro Salvador Arena";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 22px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      h2 
+      {
+        width: min(700px, 90%);
+        margin: 40px auto 10px;
+        padding: 12px 16px;
+        background: linear-gradient(90deg, var(--azul-escuro) 0%, rgba(234, 244, 255, 0.2) 100%);
+        color: var(--azul-claro);
+        font-size: 23px;
+        border-left: 5px solid var(--laranja);
+        border-top: 1px solid rgba(0, 87, 168, 0.08);
+        border-bottom: 1px solid rgba(0, 87, 168, 0.08);
+      }
+
+      label 
+      {
+        display: block;
+        width: min(700px, 90%);
+        margin: 16px auto 0;
+        color: var(--azul-escuro);
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      input[type="text"], input[type="email"] 
+      {
+        display: block;
+        width: min(700px, 90%);
+        margin: 0 auto 4px;
+        padding: 13px 14px;
+        background-color: var(--branco);
+        color: var(--texto);
+        border: 1px solid var(--borda);
+        border-radius: 7px;
+        font-family: inherit;
+        font-size: 18px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      input[type="text"]:focus, input[type="email"]:focus 
+      {
+        border-color: var(--azul);
+        box-shadow: 0 0 0 3px var(--azul-claro);
+      }
+
+      form 
+      {
+        width: min(700px, 90%);
+        margin: 25px auto 28px;
+      }
+
+      form p 
+      {
+        margin: 0 0 0;
+        color: var(--azul-escuro);
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .curso-opcoes 
+      {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 42px;
+        margin: 0;
+      }
+
+      .curso-item 
+      {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        width: auto !important;
+        margin: 0 !important;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .curso-item input[type="radio"] 
+      {
+        width: 19px;
+        height: 19px;
+        margin: 0;
+        accent-color: var(--azul);
+        cursor: pointer;
+      }
+
+      .aluno-linha 
+      {
+        display: flex;
+        width: min(700px, 90%);
+        margin: 18px auto;
+        gap: 24px;
+        align-items: flex-end;
+      }
+
+      .campo-aluno 
+      {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .campo-ra 
+      {
+        flex: 0 0 210px;
+      }
+
+      .aluno-linha label 
+      {
+        width: auto;
+        margin: 0 0 7px;
+      }
+
+      .aluno-linha input[type="text"] 
+      {
+        width: 100%;
+        margin: 0;
+      }
+
+      .campo-ra input[id^="RA"] 
+      {
+        width: 100%;
+        max-width: none;
+      }
+
+      .nota
+      {
+        width: 130px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center;
+        font-weight: 600;
+        font-size: 18px !important;
+      }
+
+      .acoes 
+      {
+        width: min(700px, 90%);
+        margin: 30px auto 10px;
+        text-align: center;
+      }
+
+      .container 
+      {
+        width: 70%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      button {
+        display: inline-block;
+        min-width: 230px;
+        min-height: 58px;
+        padding: 15px 28px;
+        margin: 8px;
+        background-color: var(--azul);
+        color: var(--branco);
+        border: none;
+        border-radius: 9px;
+        font-family: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+      }
+
+      button:hover {
+        background-color: var(--azul-hover);
+        box-shadow: 0 5px 12px rgba(0, 87, 168, 0.25);
+      }
+
+      button:active {
+        transform: translateY(2px);
+      }
+
+      #mensagem {
+        width: min(700px, 90%);
+        margin: 16px auto;
+        padding: 12px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      #resultado1, #resultado2, #resultado3, #resultado4 {
+        width: min(700px, 90%);
+        margin: 10px auto;
+        padding: 13px 15px;
+        background-color: var(--azul-claro);
+        border-left: 5px solid var(--azul);
+        border-radius: 6px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      @media (max-width: 768px) 
+      {
+        body 
+        {
+          font-size: 16px;
+        }
+
+        h1 
+        {
+          min-height: 78px;
+          padding: 20px;
+          font-size: 27px;
+        }
+
+        h1::after 
+        {
+          display: none;
+        }
+
+        .curso-opcoes 
+        {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .aluno-linha 
+        {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+        }
+
+        .campo-ra 
+        {
+          flex: none;
+          width: 100%;
+        }
+
+        button 
+        {
+          display: block;
+          width: 100%;
+          margin: 12px auto;
+        }
+      }
+
+
+      /* NOTAS ORAIS EM GRADE 2x2 */
+      .oral-grid 
+      {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        width: min(700px, 90%);
+        margin: 15px auto 30px;
+
+        gap: 18px 40px;
+      }
+
+      .oral-aluno 
+      {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .oral-aluno label 
+      {
+        width: auto;
+        margin: 0 0 6px;
+      }
+
+      .oral-aluno .nota 
+      {
+        width: 120px !important;
+        margin: 0;
+      }
+
+
+      @media (max-width: 600px) 
+      {
+        .oral-grid 
+        {
+          grid-template-columns: 1fr;
+        }
+      }
+
     </style>
 
   </head>
@@ -27,43 +375,63 @@
     <br>
 
     <form action="">
-      <p>Curso: </p>
+      <p>Curso:</p>
 
-      <!--ADM vem marcado por padrão-->
-      <input type="radio" name="curso" id="ADM" value="Administração" checked>
-      <label for="ADM">Administração</label>
-
-      <input type="radio" name="curso" id="EC" value="Engenharia de Computação">
-      <label for="EC">Engenharia de Computação</label>
-
+      <div class="curso-opcoes">
+        <label class="curso-item"><input type="radio" name="curso" id="ADM" value="Administração" checked><span>Administração</span></label>
+        <label class="curso-item"><input type="radio" name="curso" id="EC" value="Engenharia de Computação"><span>Engenharia de Computação</span></label>
+      </div>
     </form>
 
 
     <!--input dos nomes dos alunos participantes e seus RAs-->
-    <label>Aluno 1: </label>
-    <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
-    <br>
-    <label>RA: </label>
-    <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
-    <br>
+    <div class="aluno-linha">
+      <div class="campo-aluno">
+        <label for="aluno1">Aluno 1:</label>
+        <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+      </div>
 
-    <label>Aluno 2: </label>
-    <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
-    <br>
-    <label>RA: </label>
-    <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
-    <br>
-    <label>Aluno 3: </label>
-    <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
-    <br>
-    <label>RA: </label>
-    <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
-    <br>
-    <label>Aluno 4: </label>
-    <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
-    <br>
-    <label>RA: </label>
-    <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
+      <div class="campo-ra">
+        <label for="RA1">RA:</label>
+        <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
+      </div>
+    </div>
+
+    <div class="aluno-linha">
+      <div class="campo-aluno">
+        <label for="aluno2">Aluno 2:</label>
+        <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
+      </div>
+
+      <div class="campo-ra">
+        <label for="RA2">RA:</label>
+        <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
+      </div>
+    </div>
+
+    <div class="aluno-linha">
+      <div class="campo-aluno">
+        <label for="aluno3">Aluno 3:</label>
+        <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
+      </div>
+
+      <div class="campo-ra">
+        <label for="RA3">RA:</label>
+        <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
+      </div>
+    </div>
+
+    <div class="aluno-linha">
+      <div class="campo-aluno">
+        <label for="aluno4">Aluno 4:</label>
+        <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
+      </div>
+
+      <div class="campo-ra">
+        <label for="RA4">RA:</label>
+        <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
+      </div>
+    </div>
 
 
     <!--notas dos critérios de artigo científico-->
@@ -71,34 +439,34 @@
 
     <label>1. Adequação do tema com as linhas de pesquisa: <br> (Máximo: 1,0) </label>
     <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+
 
     <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso 
       de forma integrada: <br> (Máximo: 1,0) </label>
     <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+
 
     <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos 
       para resolução de problemas dentro da área de formação: <br> (Máximo: 2,0) </label>
     <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+
 
     <label>4. Rigor metodológico e sua relação com a análise de resultados: <br> (Máximo: 2,0) </label>
     <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+
 
     <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <br> (Máximo: 2,0) </label>
     <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+
 
     <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação 
       da linguagem: <br> (Máximo: 1,0) </label>
     <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+
 
     <label>7. Qualidade e originalidade dos argumentos: <br> (Máximo: 1,0) </label>
     <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+
 
 
     <!--notas dos critérios de relatório técnico-->
@@ -106,130 +474,175 @@
 
     <label>1. O conteúdo promove a interdisciplinaridade: <br> (Máximo: 2,0) </label>
     <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+
 
     <label>2. O conteúdo busca uma linguagem próxima ao mercado: <br> (Máximo: 1,0) </label>
     <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+
 
     <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <br> (Máximo: 3,0) </label>
     <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+
 
     <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <br> (Máximo: 2,0) </label>
     <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+
 
     <label>5. O produto reflete as atividades de pesquisa realizadas: <br> (Máximo: 2,0) </label>
     <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+
 
 
     <!--notas dos critérios de apresentação oral (por aluno)-->
     <h2>Apresentação oral: </h2>
 
-    <label>1. A apresentação sistematizada do trabalho final de acordo com as normas indicadas:  (Máximo: 2,0) </label> <br>
+    <label>1. A apresentação sistematizada do trabalho final de acordo com as normas indicadas:  (Máximo: 2,0) </label>
 
     <!--labels mudam o nome conforme são digitados-->
-    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral1aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+    <div class="oral-grid">
 
-    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral1aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
+        <input type="text" id="oral1aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral1aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
+        <input type="text" id="oral1aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral1aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
+        <input type="text" id="oral1aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+      <div class="oral-aluno">
+        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
+        <input type="text" id="oral1aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+    </div>
+
 
 
     <label>2. A clareza da exposição e coerência argumentativa dos alunos:  (Máximo: 2,5) </label> <br>
 
-    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral2aluno1" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+    <div class="oral-grid">
 
-    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral2aluno2" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
+        <input type="text" id="oral2aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral2aluno3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
+        <input type="text" id="oral2aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral2aluno4" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
+        <input type="text" id="oral2aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+      <div class="oral-aluno">
+        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
+        <input type="text" id="oral2aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+    </div>
 
 
-    <label>3. O caráter científico do trabalho: a consistência dos dados e da fundamentação teórica: (Máximo: 2,5) </label> <br>
 
-    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral3aluno1" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+    <label>3. O caráter científico do trabalho: a consistência dos dados e da fundamentação teórica: (Máximo: 2,5) </label>
 
-    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral3aluno2" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+    <div class="oral-grid">
 
-    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral3aluno3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
+        <input type="text" id="oral3aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral3aluno4" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
+        <input type="text" id="oral3aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+      <div class="oral-aluno">
+        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
+        <input type="text" id="oral3aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+      <div class="oral-aluno">
+        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
+        <input type="text" id="oral3aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+    </div>
+
 
 
     <label>4. A participação de todos os alunos do grupo na apresentação:  (Máximo: 2,0) </label> <br>
 
-    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral4aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+    <div class="oral-grid">
 
-    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral4aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
+        <input type="text" id="oral4aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral4aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
+        <input type="text" id="oral4aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral4aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
+        <input type="text" id="oral4aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+      <div class="oral-aluno">
+        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
+        <input type="text" id="oral4aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+    </div>
 
 
-    <label>5. O respeito ao tempo de apresentação:  (Máximo: 1,0) </label> <br>
 
-    <label> Aluno 1 <span class="nomeAluno1"></span>: </label> <br>
-    <input type="text" id="oral5aluno1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+    <label>5. O respeito ao tempo de apresentação:  (Máximo: 1,0) </label>
 
-    <label> Aluno 2 <span class="nomeAluno2"></span>: </label> <br>
-    <input type="text" id="oral5aluno2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+    <div class="oral-grid">
 
-    <label> Aluno 3 <span class="nomeAluno3"></span>: </label> <br>
-    <input type="text" id="oral5aluno3" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
+        <input type="text" id="oral5aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
-    <label> Aluno 4 <span class="nomeAluno4"></span>: </label> <br>
-    <input type="text" id="oral5aluno4" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-    <br>
+      <div class="oral-aluno">
+        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
+        <input type="text" id="oral5aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
 
+      <div class="oral-aluno">
+        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
+        <input type="text" id="oral5aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+      <div class="oral-aluno">
+        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
+        <input type="text" id="oral5aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      </div>
+
+    </div>
+
+    
     <label for="email">E-mail para receber uma cópia da ficha:</label>
     <input type="email" name="email" id="email" placeholder="seuemail@dominio.com">
 
-    
-    <button onclick="calcular()">Calcular</button>
-
-    <button onclick="salvarAvaliacao()">Salvar avaliação</button>
+    <div class="acoes">
+      <button type="button" onclick="calcular()">Calcular</button>
+      <button type="button" onclick="salvarAvaliacao()">Salvar avaliação</button>
+    </div>
 
     <!--para feedback de salvando/erro-->
     <p id="mensagem"></p>
@@ -358,10 +771,7 @@
       {
         campo.addEventListener("input", function()
         {
-          campo.value =
-            campo.value
-              .replace(/[^0-9]/g, "")
-              .slice(0, 9);
+          campo.value = campo.value.replace(/[^0-9]/g, "").slice(0, 9);
         });
       });
 
@@ -482,11 +892,10 @@
       //verifica se existe algum campo em branco ou com nota inválida
       function validarDados(dados) 
       {
-
         //garante que o RA tenha 9 digitos
         const raValido = /^\d{9}$/;
 
-        //garante que o email seja valido= texto + @ + . + texto
+        //garante que o email seja valido = texto + @ + texto + . + texto
         const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (
@@ -541,6 +950,7 @@
           dados.oral5aluno2 === null ||
           dados.oral5aluno3 === null ||
           dados.oral5aluno4 === null ||
+
           dados.email === "" ||
           !emailValido.test(dados.email)) 
           
