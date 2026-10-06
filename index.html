@@ -5,14 +5,14 @@
     <base target="_top">
 
     <style>
-      :root 
+      :root
       {
         --azul: #0057A8;
         --azul-escuro: #003B73;
         --azul-hover: #004782;
         --azul-claro: #EAF4FF;
-        --laranja: #F58220;
-        --laranja-hover: #D96D0B;
+        --laranja: #f8c611;
+        --laranja-hover: #e7a20c;
         --laranja-claro: #FFF1E6;
         --branco: #FAFAFA;
         --fundo: #E1E7ED;
@@ -23,17 +23,17 @@
         --raio: 10px;
       }
 
-      *, *::before, *::after 
+      *, *::before, *::after
       {
         box-sizing: border-box;
       }
 
-      html 
+      html
       {
         scroll-behavior: smooth;
       }
 
-      body 
+      body
       {
         margin: 0;
         padding: 0 0 50px;
@@ -45,7 +45,7 @@
         min-height: 100vh;
       }
 
-      h1 
+      h1
       {
         position: relative;
         margin: 0 0 35px;
@@ -61,7 +61,7 @@
         border-bottom: 5px solid var(--laranja);
       }
 
-      h1::after 
+      h1::after
       {
         content: "Faculdade Engenheiro Salvador Arena";
         position: absolute;
@@ -73,7 +73,7 @@
         white-space: nowrap;
       }
 
-      h2 
+      h2
       {
         width: min(700px, 90%);
         margin: 40px auto 10px;
@@ -86,7 +86,7 @@
         border-bottom: 1px solid rgba(0, 87, 168, 0.08);
       }
 
-      label 
+      label
       {
         display: block;
         width: min(700px, 90%);
@@ -96,7 +96,7 @@
         font-size: 18px;
       }
 
-      input[type="text"], input[type="email"] 
+      input[type="text"], input[type="email"], select
       {
         display: block;
         width: min(700px, 90%);
@@ -112,27 +112,27 @@
         transition: border-color 0.2s, box-shadow 0.2s;
       }
 
-      input[type="text"]:focus, input[type="email"]:focus 
+      input[type="text"]:focus, input[type="email"]:focus, select:focus
       {
         border-color: var(--azul);
         box-shadow: 0 0 0 3px var(--azul-claro);
       }
 
-      form 
+      form
       {
         width: min(700px, 90%);
         margin: 25px auto 28px;
       }
 
-      form p 
+      form p
       {
-        margin: 0 0 0;
+        margin: 0;
         color: var(--azul-escuro);
         font-size: 18px;
         font-weight: 700;
       }
 
-      .curso-opcoes 
+      .curso-opcoes
       {
         display: flex;
         justify-content: center;
@@ -141,7 +141,7 @@
         margin: 0;
       }
 
-      .curso-item 
+      .curso-item
       {
         display: inline-flex;
         align-items: center;
@@ -154,7 +154,7 @@
         cursor: pointer;
       }
 
-      .curso-item input[type="radio"] 
+      .curso-item input[type="radio"]
       {
         width: 19px;
         height: 19px;
@@ -163,7 +163,7 @@
         cursor: pointer;
       }
 
-      .aluno-linha 
+      .aluno-linha
       {
         display: flex;
         width: min(700px, 90%);
@@ -172,30 +172,30 @@
         align-items: flex-end;
       }
 
-      .campo-aluno 
+      .campo-aluno
       {
         flex: 1;
         min-width: 0;
       }
 
-      .campo-ra 
+      .campo-ra
       {
         flex: 0 0 210px;
       }
 
-      .aluno-linha label 
+      .aluno-linha label
       {
         width: auto;
         margin: 0 0 7px;
       }
 
-      .aluno-linha input[type="text"] 
+      .aluno-linha input[type="text"]
       {
         width: 100%;
         margin: 0;
       }
 
-      .campo-ra input[id^="RA"] 
+      .campo-ra input[id^="RA"]
       {
         width: 100%;
         max-width: none;
@@ -211,21 +211,22 @@
         font-size: 18px !important;
       }
 
-      .acoes 
+      .acoes
       {
         width: min(700px, 90%);
         margin: 30px auto 10px;
         text-align: center;
       }
 
-      .container 
+      .container
       {
         width: 70%;
         max-width: 1200px;
         margin: 0 auto;
       }
 
-      button {
+      button
+      {
         display: inline-block;
         min-width: 230px;
         min-height: 58px;
@@ -242,16 +243,19 @@
         transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
       }
 
-      button:hover {
+      button:hover
+      {
         background-color: var(--azul-hover);
         box-shadow: 0 5px 12px rgba(0, 87, 168, 0.25);
       }
 
-      button:active {
+      button:active
+      {
         transform: translateY(2px);
       }
 
-      #mensagem {
+      #mensagem
+      {
         width: min(700px, 90%);
         margin: 16px auto;
         padding: 12px;
@@ -260,7 +264,8 @@
         font-size: 18px;
       }
 
-      #resultado1, #resultado2, #resultado3, #resultado4 {
+      #resultado1, #resultado2, #resultado3, #resultado4, #resultado5
+      {
         width: min(700px, 90%);
         margin: 10px auto;
         padding: 13px 15px;
@@ -271,46 +276,74 @@
         font-weight: 600;
       }
 
-      @media (max-width: 768px) 
+      /* NOTAS ORAIS EM GRADE 2x2 */
+      .oral-grid
       {
-        body 
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: min(700px, 90%);
+        margin: 15px auto 30px;
+        gap: 18px 40px;
+      }
+
+      .oral-aluno
+      {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .oral-aluno label
+      {
+        width: auto;
+        margin: 0 0 6px;
+      }
+
+      .oral-aluno .nota
+      {
+        width: 120px !important;
+        margin: 0 !important;
+      }
+
+      @media (max-width: 768px)
+      {
+        body
         {
           font-size: 16px;
         }
 
-        h1 
+        h1
         {
           min-height: 78px;
           padding: 20px;
           font-size: 27px;
         }
 
-        h1::after 
+        h1::after
         {
           display: none;
         }
 
-        .curso-opcoes 
+        .curso-opcoes
         {
           flex-direction: column;
           align-items: flex-start;
           gap: 12px;
         }
 
-        .aluno-linha 
+        .aluno-linha
         {
           flex-direction: column;
           align-items: stretch;
           gap: 12px;
         }
 
-        .campo-ra 
+        .campo-ra
         {
           flex: none;
           width: 100%;
         }
 
-        button 
+        button
         {
           display: block;
           width: 100%;
@@ -318,48 +351,14 @@
         }
       }
 
-
-      /* NOTAS ORAIS EM GRADE 2x2 */
-      .oral-grid 
+      @media (max-width: 600px)
       {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-
-        width: min(700px, 90%);
-        margin: 15px auto 30px;
-
-        gap: 18px 40px;
-      }
-
-      .oral-aluno 
-      {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .oral-aluno label 
-      {
-        width: auto;
-        margin: 0 0 6px;
-      }
-
-      .oral-aluno .nota 
-      {
-        width: 120px !important;
-        margin: 0;
-      }
-
-
-      @media (max-width: 600px) 
-      {
-        .oral-grid 
+        .oral-grid
         {
           grid-template-columns: 1fr;
         }
       }
-
     </style>
-
   </head>
 
   <body>
@@ -368,11 +367,9 @@
     <!--Inputs de dados-->
     <label>Professor(a) Orientador(a): </label>
     <input type="text" id="orientador">
-    <br>
 
     <label>Título do TCC: </label>
     <input type="text" id="titulo">
-    <br>
 
     <form action="">
       <p>Curso:</p>
@@ -383,259 +380,122 @@
       </div>
     </form>
 
+    <!--quantidade de alunos-->
+    <label for="quantidadeAlunos">Quantidade de alunos:</label>
+    <select id="quantidadeAlunos" onchange="alterarQuantidadeAlunos()">
+      <option value="1">1 aluno</option>
+      <option value="2">2 alunos</option>
+      <option value="3">3 alunos</option>
+      <option value="4" selected>4 alunos</option>
+      <option value="5">5 alunos</option>
+    </select>
 
     <!--input dos nomes dos alunos participantes e seus RAs-->
-    <div class="aluno-linha">
-      <div class="campo-aluno">
-        <label for="aluno1">Aluno 1:</label>
-        <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+    <div id="alunos-container">
+
+      <div class="aluno-linha" id="aluno-linha-1">
+        <div class="campo-aluno">
+          <label for="aluno1">Aluno 1:</label>
+          <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+        </div>
+        <div class="campo-ra">
+          <label for="RA1">RA:</label>
+          <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
+        </div>
       </div>
 
-      <div class="campo-ra">
-        <label for="RA1">RA:</label>
-        <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
+      <div class="aluno-linha" id="aluno-linha-2">
+        <div class="campo-aluno">
+          <label for="aluno2">Aluno 2:</label>
+          <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
+        </div>
+        <div class="campo-ra">
+          <label for="RA2">RA:</label>
+          <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
+        </div>
       </div>
+
+      <div class="aluno-linha" id="aluno-linha-3">
+        <div class="campo-aluno">
+          <label for="aluno3">Aluno 3:</label>
+          <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
+        </div>
+        <div class="campo-ra">
+          <label for="RA3">RA:</label>
+          <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
+        </div>
+      </div>
+
+      <div class="aluno-linha" id="aluno-linha-4">
+        <div class="campo-aluno">
+          <label for="aluno4">Aluno 4:</label>
+          <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
+        </div>
+        <div class="campo-ra">
+          <label for="RA4">RA:</label>
+          <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
+        </div>
+      </div>
+
+      <div class="aluno-linha" id="aluno-linha-5" style="display:none;">
+        <div class="campo-aluno">
+          <label for="aluno5">Aluno 5:</label>
+          <input type="text" id="aluno5" oninput="atualizarNomeAluno(5)">
+        </div>
+        <div class="campo-ra">
+          <label for="RA5">RA:</label>
+          <input type="text" id="RA5" inputmode="numeric" maxlength="9" class="ra">
+        </div>
+      </div>
+
     </div>
-
-    <div class="aluno-linha">
-      <div class="campo-aluno">
-        <label for="aluno2">Aluno 2:</label>
-        <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
-      </div>
-
-      <div class="campo-ra">
-        <label for="RA2">RA:</label>
-        <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
-      </div>
-    </div>
-
-    <div class="aluno-linha">
-      <div class="campo-aluno">
-        <label for="aluno3">Aluno 3:</label>
-        <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
-      </div>
-
-      <div class="campo-ra">
-        <label for="RA3">RA:</label>
-        <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
-      </div>
-    </div>
-
-    <div class="aluno-linha">
-      <div class="campo-aluno">
-        <label for="aluno4">Aluno 4:</label>
-        <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
-      </div>
-
-      <div class="campo-ra">
-        <label for="RA4">RA:</label>
-        <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
-      </div>
-    </div>
-
 
     <!--notas dos critérios de artigo científico-->
     <h2>Artigo Científico</h2>
 
-    <label>1. Adequação do tema com as linhas de pesquisa: <br> (Máximo: 1,0) </label>
+    <label>1. Adequação do tema com as linhas de pesquisa: <b>(Máximo: 1,0)</b></label>
     <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-
-    <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso 
-      de forma integrada: <br> (Máximo: 1,0) </label>
+    <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso de forma integrada: <b>(Máximo: 1,0)</b></label>
     <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-
-    <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos 
-      para resolução de problemas dentro da área de formação: <br> (Máximo: 2,0) </label>
+    <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos para resolução de problemas dentro da área de formação: <b>(Máximo: 2,0)</b></label>
     <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-
-    <label>4. Rigor metodológico e sua relação com a análise de resultados: <br> (Máximo: 2,0) </label>
+    <label>4. Rigor metodológico e sua relação com a análise de resultados: <b>(Máximo: 2,0)</b></label>
     <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-
-    <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <br> (Máximo: 2,0) </label>
+    <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <b>(Máximo: 2,0)</b></label>
     <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-
-    <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação 
-      da linguagem: <br> (Máximo: 1,0) </label>
+    <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação da linguagem: <b>(Máximo: 1,0)</b></label>
     <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-
-    <label>7. Qualidade e originalidade dos argumentos: <br> (Máximo: 1,0) </label>
+    <label>7. Qualidade e originalidade dos argumentos: <b>(Máximo: 1,0)</b></label>
     <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-
-
 
     <!--notas dos critérios de relatório técnico-->
     <h2>Relatório Técnico</h2>
 
-    <label>1. O conteúdo promove a interdisciplinaridade: <br> (Máximo: 2,0) </label>
+    <label>1. O conteúdo promove a interdisciplinaridade: <b>(Máximo: 2,0)</b></label>
     <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-
-    <label>2. O conteúdo busca uma linguagem próxima ao mercado: <br> (Máximo: 1,0) </label>
+    <label>2. O conteúdo busca uma linguagem próxima ao mercado: <b>(Máximo: 1,0)</b></label>
     <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-
-    <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <br> (Máximo: 3,0) </label>
+    <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <b>(Máximo: 3,0)</b></label>
     <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
 
-
-    <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <br> (Máximo: 2,0) </label>
+    <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <b>(Máximo: 2,0)</b></label>
     <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-
-    <label>5. O produto reflete as atividades de pesquisa realizadas: <br> (Máximo: 2,0) </label>
+    <label>5. O produto reflete as atividades de pesquisa realizadas: <b>(Máximo: 2,0)</b></label>
     <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
+    <!--notas dos critérios de apresentação oral geradas conforme a quantidade de alunos-->
+    <h2>Apresentação oral:</h2>
+    <div id="avaliacao-oral-container"></div>
 
-
-    <!--notas dos critérios de apresentação oral (por aluno)-->
-    <h2>Apresentação oral: </h2>
-
-    <label>1. A apresentação sistematizada do trabalho final de acordo com as normas indicadas:  (Máximo: 2,0) </label>
-
-    <!--labels mudam o nome conforme são digitados-->
-    <div class="oral-grid">
-
-      <div class="oral-aluno">
-        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
-        <input type="text" id="oral1aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
-        <input type="text" id="oral1aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
-        <input type="text" id="oral1aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
-        <input type="text" id="oral1aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-    </div>
-
-
-
-    <label>2. A clareza da exposição e coerência argumentativa dos alunos:  (Máximo: 2,5) </label> <br>
-
-    <div class="oral-grid">
-
-      <div class="oral-aluno">
-        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
-        <input type="text" id="oral2aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
-        <input type="text" id="oral2aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
-        <input type="text" id="oral2aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
-        <input type="text" id="oral2aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-    </div>
-
-
-
-    <label>3. O caráter científico do trabalho: a consistência dos dados e da fundamentação teórica: (Máximo: 2,5) </label>
-
-    <div class="oral-grid">
-
-      <div class="oral-aluno">
-        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
-        <input type="text" id="oral3aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
-        <input type="text" id="oral3aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
-        <input type="text" id="oral3aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
-        <input type="text" id="oral3aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-    </div>
-
-
-
-    <label>4. A participação de todos os alunos do grupo na apresentação:  (Máximo: 2,0) </label> <br>
-
-    <div class="oral-grid">
-
-      <div class="oral-aluno">
-        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
-        <input type="text" id="oral4aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
-        <input type="text" id="oral4aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
-        <input type="text" id="oral4aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
-        <input type="text" id="oral4aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-    </div>
-
-
-
-    <label>5. O respeito ao tempo de apresentação:  (Máximo: 1,0) </label>
-
-    <div class="oral-grid">
-
-      <div class="oral-aluno">
-        <label>Aluno 1 <span class="nomeAluno1"></span>:</label>
-        <input type="text" id="oral5aluno1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 2 <span class="nomeAluno2"></span>:</label>
-        <input type="text" id="oral5aluno2" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 3 <span class="nomeAluno3"></span>:</label>
-        <input type="text" id="oral5aluno3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-      <div class="oral-aluno">
-        <label>Aluno 4 <span class="nomeAluno4"></span>:</label>
-        <input type="text" id="oral5aluno4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-      </div>
-
-    </div>
-
-    
     <label for="email">E-mail para receber uma cópia da ficha:</label>
     <input type="email" name="email" id="email" placeholder="seuemail@dominio.com">
 
@@ -647,7 +507,6 @@
     <!--para feedback de salvando/erro-->
     <p id="mensagem"></p>
 
-
     <h2>Resultados</h2>
 
     <!--exibe as notas calculadas antes de enviar/salvar-->
@@ -655,69 +514,163 @@
     <p id="resultado2"></p>
     <p id="resultado3"></p>
     <p id="resultado4"></p>
-
+    <p id="resultado5"></p>
 
     <script>
       //função que converte de texto para número e verifica se o valor é válido
-      function converterNota(valor, notaMaxima) 
+      function converterNota(valor, notaMaxima)
       {
-        //remove espaços - "/\s+/g" pega os espaços e os remove (troca por '')
+        //remove espaços
         valor = valor.replace(/\s+/g,'');
 
-        //aceita tanto 8,5 quanto 8.5 - troca virgula por ponto
+        //aceita tanto 8,5 quanto 8.5
         valor = valor.replace(',','.');
 
         //converte texto em número
         const nota = parseFloat(valor);
 
         //verifica se está vazio
-        if (isNaN(nota)) 
+        if (isNaN(nota))
         {
           return null;
         }
 
-        //verifica se é um numero invalido - < 0 ou > nota máxima
-        if (nota < 0 || nota > notaMaxima) 
+        //verifica se é um numero invalido
+        if (nota < 0 || nota > notaMaxima)
         {
           return null;
         }
 
         return nota;
-
       }
 
-      
-      function filtrarNota(campo) 
+
+      //gera os campos de apresentação oral conforme a quantidade de alunos escolhida
+      function criarCamposOral()
+      {
+        const quantidade = Number(document.getElementById("quantidadeAlunos").value);
+        const container = document.getElementById("avaliacao-oral-container");
+
+        //guarda temporariamente as notas que já foram digitadas
+        const notasAnteriores = {};
+        container.querySelectorAll(".nota").forEach(function(campo)
+        {
+          notasAnteriores[campo.id] = campo.value;
+        });
+
+        container.innerHTML = "";
+
+        const criterios = [
+          { numero: 1, texto: "A apresentação sistematizada do trabalho final de acordo com as normas indicadas:", maximo: 2 },
+          { numero: 2, texto: "A clareza da exposição e coerência argumentativa dos alunos:", maximo: 2.5 },
+          { numero: 3, texto: "O caráter científico do trabalho: a consistência dos dados e da fundamentação teórica:", maximo: 2.5 },
+          { numero: 4, texto: "A participação de todos os alunos do grupo na apresentação:", maximo: 2 },
+          { numero: 5, texto: "O respeito ao tempo de apresentação:", maximo: 1 }
+        ];
+
+        criterios.forEach(function(criterio)
+        {
+          const titulo = document.createElement("label");
+          titulo.innerHTML = criterio.numero + ". " + criterio.texto + " <b>(Máximo: " + criterio.maximo.toString().replace(".", ",") + ")</b>";
+          container.appendChild(titulo);
+
+          const grid = document.createElement("div");
+          grid.className = "oral-grid";
+
+          for (let aluno = 1; aluno <= quantidade; aluno++)
+          {
+            const divAluno = document.createElement("div");
+            divAluno.className = "oral-aluno";
+
+            const nome = document.getElementById("aluno" + aluno).value.trim();
+            const idCampo = "oral" + criterio.numero + "aluno" + aluno;
+            const valorAnterior = notasAnteriores[idCampo] || "";
+
+            divAluno.innerHTML = '<label for="' + idCampo + '">Aluno ' + aluno + ' <span class="nomeAluno' + aluno + '">' + (nome === "" ? "" : "(" + nome + ")") + '</span>:</label>' +
+              '<input type="text" id="' + idCampo + '" inputmode="decimal" placeholder="Ex: ' + exemploNota(criterio.maximo) + '" class="nota" value="' + valorAnterior + '">';
+
+            grid.appendChild(divAluno);
+          }
+
+          container.appendChild(grid);
+        });
+
+        aplicarEventosNotas();
+      }
+
+
+      //define o exemplo mostrado dentro de cada campo de nota oral
+      function exemploNota(notaMaxima)
+      {
+        if (notaMaxima === 1)
+        {
+          return "0,5";
+        }
+
+        if (notaMaxima === 2)
+        {
+          return "1,5";
+        }
+
+        return "2,5";
+      }
+
+
+      //altera quantos alunos aparecem no formulário
+      function alterarQuantidadeAlunos()
+      {
+        const quantidade = Number(document.getElementById("quantidadeAlunos").value);
+
+        for (let i = 1; i <= 5; i++)
+        {
+          const linhaAluno = document.getElementById("aluno-linha-" + i);
+
+          if (i <= quantidade)
+          {
+            linhaAluno.style.display = "flex";
+          }
+          else
+          {
+            linhaAluno.style.display = "none";
+          }
+        }
+
+        criarCamposOral();
+
+        //limpa os resultados quando a quantidade de alunos muda
+        for (let i = 1; i <= 5; i++)
+        {
+          document.getElementById("resultado" + i).innerText = "";
+        }
+
+        document.getElementById("mensagem").innerText = "";
+      }
+
+
+      function filtrarNota(campo)
       {
         //remove espaços do input
-        // \s significa "espaço em branco" -> + "um ou mais" -> g "todos" e troca por ""
         let valor = campo.value.replace(/\s+/g,"");
 
-        //qualquer caractere que não seja numero virgula ou ponto vira = ""
+        //qualquer caractere que não seja numero virgula ou ponto vira vazio
         valor = valor.replace(/[^0-9,.]/g, "");
 
-        //permite apenas um separador decimal (ponto ou virgula)
+        //permite apenas um separador decimal
         let resultado = "";
         let contarSeparador = false;
 
-        //passa por todos caracteres do input
         for (const caractere of valor)
         {
-          //se o caractere for virgula ou ponto
-          if (caractere === "," || caractere === ".") 
+          if (caractere === "," || caractere === ".")
           {
-            //verifica se já encontrou um separador
-            if (contarSeparador) 
+            if (contarSeparador)
             {
-              //se já encontrou (for true), remove o próximo separador e continua
               continue;
             }
 
-            //ao achar o primeiro separador, permite sua exibição e vira = true
             contarSeparador = true;
           }
 
-          //atribui cada verificação ao resultado, caractere por caractere
           resultado += caractere;
         }
 
@@ -726,44 +679,45 @@
 
 
       //função que bloqueia caracteres invalidos em campos de nota
-      function bloquearCaracterInvalido(evento) 
+      function bloquearCaracterInvalido(evento)
       {
         const caractere = evento.key;
-
         const teclasPermitidas = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Tab"];
 
-        //permite comandos como Ctrl + A ou Ctrl + C nos campos de nota
+        //permite comandos como Ctrl + A ou Ctrl + C
         if (evento.ctrlKey || evento.metaKey)
         {
           return;
         }
 
-        //se forem caracteres permitidos, continua
-        if (teclasPermitidas.includes(caractere)) 
+        //permite teclas de navegação e exclusão
+        if (teclasPermitidas.includes(caractere))
         {
           return;
         }
 
         //se não for um caractere válido, bloqueia
-        if (!/[0-9,.]/.test(caractere)) 
+        if (!/[0-9,.]/.test(caractere))
         {
           evento.preventDefault();
         }
       }
 
 
-      //aplica a função de bloqueio de caracteres em todos os campos de nota
-      document.querySelectorAll(".nota").forEach(function(campo) 
+      //aplica os eventos nos campos de nota, inclusive nos campos orais gerados depois
+      function aplicarEventosNotas()
       {
-        //impede a aparição de caracteres invalidos - ao digitar
-        campo.addEventListener("keydown", bloquearCaracterInvalido);
-
-        //filtra o input para um formato válido - ao colar
-        campo.addEventListener("input", function() 
+        document.querySelectorAll(".nota").forEach(function(campo)
         {
-          filtrarNota(campo)
+          campo.removeEventListener("keydown", bloquearCaracterInvalido);
+          campo.addEventListener("keydown", bloquearCaracterInvalido);
+
+          campo.oninput = function()
+          {
+            filtrarNota(campo);
+          };
         });
-      });
+      }
 
 
       //permite apenas números nos campos de RA
@@ -776,328 +730,251 @@
       });
 
 
-      function pegarDados() 
+      function pegarDados()
       {
-        //recebe o curso selecionado nos radio buttons
         const cursoSelecionado = document.querySelector('input[name="curso"]:checked');
+        const quantidadeAlunos = Number(document.getElementById("quantidadeAlunos").value);
 
-        //cria o objeto DADOS que recebe todas informações em um único lugar
-        const dados = 
+        const dados =
         {
           orientador: document.getElementById("orientador").value.trim(),
-
           titulo: document.getElementById("titulo").value.trim(),
+          curso: cursoSelecionado ? cursoSelecionado.value : "",
+          quantidadeAlunos: quantidadeAlunos,
 
-          curso : cursoSelecionado.value,
-
-          //joga as notas na função de converter nota - 
-          //dados recebidos aqui (valor da nota, nota máxima permitida)
           //notas de artigo
           artigo1: converterNota(document.getElementById("artigo1").value, 1),
-
           artigo2: converterNota(document.getElementById("artigo2").value, 1),
-
           artigo3: converterNota(document.getElementById("artigo3").value, 2),
-
           artigo4: converterNota(document.getElementById("artigo4").value, 2),
-
           artigo5: converterNota(document.getElementById("artigo5").value, 2),
-
           artigo6: converterNota(document.getElementById("artigo6").value, 1),
-
           artigo7: converterNota(document.getElementById("artigo7").value, 1),
-
 
           //notas de relatório
           relatorio1: converterNota(document.getElementById("relatorio1").value, 2),
-
           relatorio2: converterNota(document.getElementById("relatorio2").value, 1),
-
           relatorio3: converterNota(document.getElementById("relatorio3").value, 3),
-
           relatorio4: converterNota(document.getElementById("relatorio4").value, 2),
-
           relatorio5: converterNota(document.getElementById("relatorio5").value, 2),
-
-
-          //notas de oratória e dados aluno 1
-          aluno1: document.getElementById("aluno1").value.trim(),
-
-          ra1: document.getElementById("RA1").value.trim(),
-
-          oral1aluno1: converterNota(document.getElementById("oral1aluno1").value, 2),
-
-          oral2aluno1: converterNota(document.getElementById("oral2aluno1").value, 2.5),
-
-          oral3aluno1: converterNota(document.getElementById("oral3aluno1").value, 2.5),
-
-          oral4aluno1: converterNota(document.getElementById("oral4aluno1").value, 2),
-
-          oral5aluno1: converterNota(document.getElementById("oral5aluno1").value, 1),
-
-
-          //notas de oratória e dados aluno 2
-          aluno2: document.getElementById("aluno2").value.trim(),
-
-          ra2: document.getElementById("RA2").value.trim(),
-
-          oral1aluno2: converterNota(document.getElementById("oral1aluno2").value, 2),
-
-          oral2aluno2: converterNota(document.getElementById("oral2aluno2").value, 2.5),
-
-          oral3aluno2: converterNota(document.getElementById("oral3aluno2").value, 2.5),
-
-          oral4aluno2: converterNota(document.getElementById("oral4aluno2").value, 2),
-
-          oral5aluno2: converterNota(document.getElementById("oral5aluno2").value, 1),
-
-
-          //notas de oratória e dados aluno 3
-          aluno3: document.getElementById("aluno3").value.trim(),
-
-          ra3: document.getElementById("RA3").value.trim(),
-
-          oral1aluno3: converterNota(document.getElementById("oral1aluno3").value, 2),
-
-          oral2aluno3: converterNota(document.getElementById("oral2aluno3").value, 2.5),
-
-          oral3aluno3: converterNota(document.getElementById("oral3aluno3").value, 2.5),
-
-          oral4aluno3: converterNota(document.getElementById("oral4aluno3").value, 2),
-
-          oral5aluno3: converterNota(document.getElementById("oral5aluno3").value, 1),
-
-
-          //notas de oratória e dados aluno 4
-          aluno4: document.getElementById("aluno4").value.trim(),
-
-          ra4: document.getElementById("RA4").value.trim(),
-
-          oral1aluno4: converterNota(document.getElementById("oral1aluno4").value, 2),
-
-          oral2aluno4: converterNota(document.getElementById("oral2aluno4").value, 2.5),
-
-          oral3aluno4: converterNota(document.getElementById("oral3aluno4").value, 2.5),
-
-          oral4aluno4: converterNota(document.getElementById("oral4aluno4").value, 2),
-
-          oral5aluno4: converterNota(document.getElementById("oral5aluno4").value, 1),
 
           email: document.getElementById("email").value.trim()
         };
 
+        const limitesOrais = [2, 2.5, 2.5, 2, 1];
+
+        //pega somente os alunos que existem na avaliação atual
+        for (let aluno = 1; aluno <= quantidadeAlunos; aluno++)
+        {
+          dados["aluno" + aluno] = document.getElementById("aluno" + aluno).value.trim();
+          dados["ra" + aluno] = document.getElementById("RA" + aluno).value.trim();
+
+          for (let criterio = 1; criterio <= 5; criterio++)
+          {
+            const idCampo = "oral" + criterio + "aluno" + aluno;
+            dados[idCampo] = converterNota(document.getElementById(idCampo).value, limitesOrais[criterio - 1]);
+          }
+        }
+
         return dados;
       }
 
+
       //verifica se existe algum campo em branco ou com nota inválida
-      function validarDados(dados) 
+      function validarDados(dados)
       {
         //garante que o RA tenha 9 digitos
         const raValido = /^\d{9}$/;
 
-        //garante que o email seja valido = texto + @ + texto + . + texto
+        //garante que o email seja valido
         const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (
-          dados.orientador === "" || 
-          dados.titulo === "" || 
-
-          dados.aluno1 === "" || 
-          dados.aluno2 === "" || 
-          dados.aluno3 === "" || 
-          dados.aluno4 === "" || 
-
-          !raValido.test(dados.ra1) ||
-          !raValido.test(dados.ra2) ||
-          !raValido.test(dados.ra3) ||
-          !raValido.test(dados.ra4) ||
-
-          dados.artigo1 === null || 
-          dados.artigo2 === null ||
-          dados.artigo3 === null ||
-          dados.artigo4 === null ||
-          dados.artigo5 === null ||
-          dados.artigo6 === null ||
-          dados.artigo7 === null ||
-
-          dados.relatorio1 === null || 
-          dados.relatorio2 === null || 
-          dados.relatorio3 === null || 
-          dados.relatorio4 === null || 
-          dados.relatorio5 === null || 
-
-          dados.oral1aluno1 === null || 
-          dados.oral1aluno2 === null || 
-          dados.oral1aluno3 === null || 
-          dados.oral1aluno4 === null || 
-
-          dados.oral2aluno1 === null || 
-          dados.oral2aluno2 === null || 
-          dados.oral2aluno3 === null || 
-          dados.oral2aluno4 === null || 
-
-          dados.oral3aluno1 === null || 
-          dados.oral3aluno2 === null || 
-          dados.oral3aluno3 === null || 
-          dados.oral3aluno4 === null || 
-
-          dados.oral4aluno1 === null || 
-          dados.oral4aluno2 === null || 
-          dados.oral4aluno3 === null || 
-          dados.oral4aluno4 === null || 
-         
-          dados.oral5aluno1 === null ||
-          dados.oral5aluno2 === null ||
-          dados.oral5aluno3 === null ||
-          dados.oral5aluno4 === null ||
-
-          dados.email === "" ||
-          !emailValido.test(dados.email)) 
-          
+        if (dados.orientador === "" || dados.titulo === "" || dados.curso === "")
         {
-          return false;
+          return { valido: false, mensagem: "Preencha o orientador, o título e o curso." };
         }
 
-        //não precisa de else pois a função se encerra em caso de false
-        return true;
+        //valida os alunos existentes
+        for (let aluno = 1; aluno <= dados.quantidadeAlunos; aluno++)
+        {
+          if (dados["aluno" + aluno] === "")
+          {
+            return { valido: false, mensagem: "Preencha o nome do Aluno " + aluno + "." };
+          }
+
+          if (!raValido.test(dados["ra" + aluno]))
+          {
+            return { valido: false, mensagem: "O RA do Aluno " + aluno + " deve ter exatamente 9 números." };
+          }
+        }
+
+        //valida notas do artigo
+        for (let criterio = 1; criterio <= 7; criterio++)
+        {
+          if (dados["artigo" + criterio] === null)
+          {
+            return { valido: false, mensagem: "Preencha corretamente todas as notas do Artigo Científico." };
+          }
+        }
+
+        //valida notas do relatório
+        for (let criterio = 1; criterio <= 5; criterio++)
+        {
+          if (dados["relatorio" + criterio] === null)
+          {
+            return { valido: false, mensagem: "Preencha corretamente todas as notas do Relatório Técnico." };
+          }
+        }
+
+        //valida notas orais apenas dos alunos existentes
+        for (let aluno = 1; aluno <= dados.quantidadeAlunos; aluno++)
+        {
+          for (let criterio = 1; criterio <= 5; criterio++)
+          {
+            if (dados["oral" + criterio + "aluno" + aluno] === null)
+            {
+              return { valido: false, mensagem: "Preencha a nota oral do Aluno " + aluno + " no critério " + criterio + "." };
+            }
+          }
+        }
+
+        if (dados.email === "" || !emailValido.test(dados.email))
+        {
+          return { valido: false, mensagem: "Informe um e-mail válido." };
+        }
+
+        return { valido: true, mensagem: "" };
       }
 
+
       //função usada para calcular as notas finais dos alunos e exibir no html
-      function calcular() 
+      function calcular()
       {
         const dados = pegarDados();
+        const validacao = validarDados(dados);
 
-        //se dados === false aparece mensagem de erro
-        if (!validarDados(dados)) 
+        if (!validacao.valido)
         {
-          document.getElementById("mensagem").innerText = "Preencha todos os campos corretamente";
-
+          document.getElementById("mensagem").innerText = validacao.mensagem;
           return;
         }
-        
-        //se dados === true então calcula as notas finais
+
         //peso das notas
         const pesoArtigo = 0.3;
         const pesoRelatorio = 0.3;
         const pesoOral = 0.4;
 
         //soma das notas de artigo
-        const totalArtigo = dados.artigo1 + dados.artigo2 + dados.artigo3 
-        + dados.artigo4 + dados.artigo5 + dados.artigo6 + dados.artigo7;
+        const totalArtigo = dados.artigo1 + dados.artigo2 + dados.artigo3 + dados.artigo4 + dados.artigo5 + dados.artigo6 + dados.artigo7;
 
         //soma das notas de relatório
-        const totalRelatorio = dados.relatorio1 + dados.relatorio2 + dados.relatorio3
-        + dados.relatorio4 + dados.relatorio5;
+        const totalRelatorio = dados.relatorio1 + dados.relatorio2 + dados.relatorio3 + dados.relatorio4 + dados.relatorio5;
 
-        //soma das notas de oratória aluno 1
-        const totalOral1 = dados.oral1aluno1 + dados.oral2aluno1 + dados.oral3aluno1
-        + dados.oral4aluno1 + dados.oral5aluno1;
+        //limpa todos os resultados anteriores
+        for (let aluno = 1; aluno <= 5; aluno++)
+        {
+          document.getElementById("resultado" + aluno).innerText = "";
+        }
 
-        //soma das notas de oratória aluno 2
-        const totalOral2 = dados.oral1aluno2 + dados.oral2aluno2 + dados.oral3aluno2
-        + dados.oral4aluno2 + dados.oral5aluno2;
-        
-        //soma das notas de oratória aluno 3
-        const totalOral3 = dados.oral1aluno3 + dados.oral2aluno3 + dados.oral3aluno3
-        + dados.oral4aluno3 + dados.oral5aluno3;
+        //calcula apenas os alunos existentes
+        for (let aluno = 1; aluno <= dados.quantidadeAlunos; aluno++)
+        {
+          const totalOral = dados["oral1aluno" + aluno] + dados["oral2aluno" + aluno] + dados["oral3aluno" + aluno] + dados["oral4aluno" + aluno] + dados["oral5aluno" + aluno];
+          const notaFinal = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral * pesoOral);
 
-        //soma das notas de oratória aluno 4
-        const totalOral4 = dados.oral1aluno4 + dados.oral2aluno4 + dados.oral3aluno4
-        + dados.oral4aluno4 + dados.oral5aluno4;
+          document.getElementById("resultado" + aluno).innerText = dados["aluno" + aluno] + ": " + notaFinal.toFixed(2).replace('.', ',');
+        }
 
-        //notas finais - soma das notas de cada aluno com seus respectivos pesos
-        const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral1 * pesoOral);
-        const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral2 * pesoOral);
-        const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral3 * pesoOral);
-        const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral4 * pesoOral);
- 
-        //exibe os resultados nos parágrafos de mensagem - .toFixed(2) fixa máximo de 2 casas decimais - .replace troca ponto por virgula
-        document.getElementById("resultado1").innerText = dados.aluno1 + ": " + final1.toFixed(2).replace('.', ',');
-        document.getElementById("resultado2").innerText = dados.aluno2 + ": " + final2.toFixed(2).replace('.', ',');
-        document.getElementById("resultado3").innerText = dados.aluno3 + ": " + final3.toFixed(2).replace('.', ',');
-        document.getElementById("resultado4").innerText = dados.aluno4 + ": " + final4.toFixed(2).replace('.', ',');
-
-        //esconde a mensagem de salvando / falha / sucesso
         document.getElementById("mensagem").innerText = "";
-
       }
 
+
       //função que envia os dados da avaliação para salvar na planilha
-      function salvarAvaliacao() 
+      function salvarAvaliacao()
       {
         const dados = pegarDados();
+        const validacao = validarDados(dados);
 
-        //se houver campos inválidos, não prossegue o salvamento
-        if (!validarDados(dados))
+        if (!validacao.valido)
         {
-          document.getElementById("mensagem").innerText = "Preencha todos os campos corretamente.";
+          document.getElementById("mensagem").innerText = validacao.mensagem;
 
-          document.getElementById("resultado1").innerText = "";
-          document.getElementById("resultado2").innerText = "";
-          document.getElementById("resultado3").innerText = "";
-          document.getElementById("resultado4").innerText = "";
+          for (let aluno = 1; aluno <= 5; aluno++)
+          {
+            document.getElementById("resultado" + aluno).innerText = "";
+          }
 
           return;
         }
 
-        //se estiver tudo certo = segue o salvamento
-        document.getElementById("mensagem").innerText = "Salvando avaliação..."
+        document.getElementById("mensagem").innerText = "Salvando avaliação...";
 
         google.script.run
-          .withSuccessHandler(function(resultado) 
+          .withSuccessHandler(function(resultado)
           {
-            //exibe as notas de cada aluno nos parágrafos de resultados
-            document.getElementById("resultado1").innerText = resultado.aluno1 + ": " + resultado.final1.toFixed(2).replace('.', ',');
-            document.getElementById("resultado2").innerText = resultado.aluno2 + ": " + resultado.final2.toFixed(2).replace('.', ',');
-            document.getElementById("resultado3").innerText = resultado.aluno3 + ": " + resultado.final3.toFixed(2).replace('.', ',');
-            document.getElementById("resultado4").innerText = resultado.aluno4 + ": " + resultado.final4.toFixed(2).replace('.', ',');
+            //limpa resultados anteriores
+            for (let aluno = 1; aluno <= 5; aluno++)
+            {
+              document.getElementById("resultado" + aluno).innerText = "";
+            }
 
-            //feedback visual de sucesso
+            //o Code.gs será adaptado para devolver quantidadeAlunos e os resultados dinamicamente
+            const quantidadeResultado = resultado.quantidadeAlunos || dados.quantidadeAlunos;
+
+            for (let aluno = 1; aluno <= quantidadeResultado; aluno++)
+            {
+              const nomeAluno = resultado["aluno" + aluno] || dados["aluno" + aluno];
+              const notaFinal = resultado["final" + aluno];
+
+              if (notaFinal !== undefined && notaFinal !== null)
+              {
+                document.getElementById("resultado" + aluno).innerText = nomeAluno + ": " + Number(notaFinal).toFixed(2).replace('.', ',');
+              }
+            }
+
             document.getElementById("mensagem").innerText = "Avaliação salva com sucesso!";
           })
-
           .withFailureHandler(function(erro)
           {
-            //feedback visual de erro
             document.getElementById("mensagem").innerText = "Erro: " + erro.message;
           })
-          
-          //envia os dados pra função de salvamento
           .salvarAvaliacao(dados);
-
       }
 
 
-      //função que exibe nome do aluno no <span> conforme é digitado
+      //função que exibe nome do aluno nas notas orais conforme é digitado
       function atualizarNomeAluno(numeroAluno)
       {
-        //pega o campo em que o nome foi digitado
         const campoAluno = document.getElementById("aluno" + numeroAluno);
-
-        //agora busca pela classe de nomes ao invés de IDs, o "." antes de nomeAluno significa isso - classe
+        const nome = campoAluno.value.trim();
         const nomesExibidos = document.querySelectorAll(".nomeAluno" + numeroAluno);
 
-        //remove os espaços antes / depois do nome
-        const nome = campoAluno.value.trim();
-
-        //função que atualiza TODAS as classes de mesmo nome
-        nomesExibidos.forEach(function(nomeExibido) 
+        nomesExibidos.forEach(function(nomeExibido)
         {
           if (nome === "")
-            {
-              nomeExibido.innerText = "";
-            }
-
-            else
-            {
-              nomeExibido.innerText = "(" + nome + ")"
-            }
+          {
+            nomeExibido.innerText = "";
+          }
+          else
+          {
+            nomeExibido.innerText = "(" + nome + ")";
+          }
         });
-
       }
 
-    </script>
 
+      //configuração inicial da página
+      window.addEventListener("load", function()
+      {
+        alterarQuantidadeAlunos();
+        aplicarEventosNotas();
+
+        for (let aluno = 1; aluno <= 5; aluno++)
+        {
+          atualizarNomeAluno(aluno);
+        }
+      });
+    </script>
   </body>
 
 </html>

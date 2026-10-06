@@ -11,9 +11,14 @@ const propriedades = PropertiesService.getScriptProperties();
 const CONFIG = 
 {
   PLANILHA_ID: propriedades.getProperty('PLANILHA_ID'),
-  MODELO_DOC_ID: propriedades.getProperty('MODELO_DOC_ID'),
   PASTA_FICHAS_ID: propriedades.getProperty('PASTA_FICHAS_ID'),
-  PASTA_PDFS_ID: propriedades.getProperty('PASTA_PDFS_ID')
+  PASTA_PDFS_ID: propriedades.getProperty('PASTA_PDFS_ID'),
+
+  MODELO_DOC_1_ID: propriedades.getProperty('MODELO_DOC_1_ID'),
+  MODELO_DOC_2_ID: propriedades.getProperty('MODELO_DOC_2_ID'),
+  MODELO_DOC_3_ID: propriedades.getProperty('MODELO_DOC_3_ID'),
+  MODELO_DOC_4_ID: propriedades.getProperty('MODELO_DOC_4_ID'),
+  MODELO_DOC_5_ID: propriedades.getProperty('MODELO_DOC_5_ID')
 }
 
 
@@ -56,8 +61,22 @@ function formatarNota(valor)
 //função que cria uma cópia da ficha modelo para preencher
 function gerarFichaAvaliacao(dados, calculos, momento) 
 {
-  //pega o arquivo modelo
-  const modelo = DriveApp.getFileById(CONFIG.MODELO_DOC_ID);
+  //pega o nome do arquivo modelo baseado na quantidade de alunos
+  const chaveModelo = "MODELO_DOC_" + dados.quantidadeAlunos + "_ID";
+  const modeloId = CONFIG[chaveModelo];
+
+  Logger.log(chaveModelo);
+  Logger.log(modeloId);
+  
+  //verifica se encontrou o modelo
+  if (!modeloId)
+  {
+    throw new Error("Modelo não encontrado para " + dados.quantidadeAlunos + " aluno(s).");
+  }
+
+  //pega o ID do modelo
+  const modelo = DriveApp.getFileById(modeloId);
+
 
   //pega a pasta onde as fichas serão salvas
   const pastaFichas = DriveApp.getFolderById(CONFIG.PASTA_FICHAS_ID);
@@ -89,17 +108,11 @@ function gerarFichaAvaliacao(dados, calculos, momento)
   corpo.replaceText("<<CURSO>>", dados.curso);
 
   //dados dos alunos
-  corpo.replaceText("<<NOME1>>", dados.aluno1);
-  corpo.replaceText("<<RA1>>",dados.ra1);
-
-  corpo.replaceText("<<NOME2>>", dados.aluno2);
-  corpo.replaceText("<<RA2>>",dados.ra2);
-
-  corpo.replaceText("<<NOME3>>", dados.aluno3);
-  corpo.replaceText("<<RA3>>",dados.ra3);
-
-  corpo.replaceText("<<NOME4>>", dados.aluno4);
-  corpo.replaceText("<<RA4>>",dados.ra4);
+  for (let i = 1; i <= dados.quantidadeAlunos; i++)
+  {
+    corpo.replaceText("<<NOME" + i + ">>", dados["aluno" + i]);
+    corpo.replaceText("<<RA" + i + ">>", dados["ra" + i]);
+  }
 
   //notas formatadas de artigo cientifico
   corpo.replaceText("<<ART1>>", formatarNota(dados.artigo1));
@@ -119,40 +132,24 @@ function gerarFichaAvaliacao(dados, calculos, momento)
   corpo.replaceText("<<REL5>>", formatarNota(dados.relatorio5));
   corpo.replaceText("<<TOTREL>>", formatarNota(calculos.totalRelatorio * calculos.pesoRelatorio));
 
-  //notas formatadas de oratória
-  corpo.replaceText("<<O1A1>>", formatarNota(dados.oral1aluno1));
-  corpo.replaceText("<<O2A1>>", formatarNota(dados.oral2aluno1));
-  corpo.replaceText("<<O3A1>>", formatarNota(dados.oral3aluno1));
-  corpo.replaceText("<<O4A1>>", formatarNota(dados.oral4aluno1));
-  corpo.replaceText("<<O5A1>>", formatarNota(dados.oral5aluno1));
-  corpo.replaceText("<<TOTO1>>", formatarNota(calculos.totalOral1 * calculos.pesoOral));
+  //notas de apresentação oral
+  for (let aluno = 1; aluno <= dados.quantidadeAlunos; aluno++)
+  {
+    for (let criterio = 1; criterio <= 5; criterio++)
+    {
+      corpo.replaceText("<<O" + criterio + "A" + aluno + ">>", formatarNota(dados["oral" + criterio + "aluno" + aluno]));
+    }
 
-  corpo.replaceText("<<O1A2>>", formatarNota(dados.oral1aluno2));
-  corpo.replaceText("<<O2A2>>", formatarNota(dados.oral2aluno2));
-  corpo.replaceText("<<O3A2>>", formatarNota(dados.oral3aluno2));
-  corpo.replaceText("<<O4A2>>", formatarNota(dados.oral4aluno2));
-  corpo.replaceText("<<O5A2>>", formatarNota(dados.oral5aluno2));
-  corpo.replaceText("<<TOTO2>>", formatarNota(calculos.totalOral2 * calculos.pesoOral));
-
-  corpo.replaceText("<<O1A3>>", formatarNota(dados.oral1aluno3));
-  corpo.replaceText("<<O2A3>>", formatarNota(dados.oral2aluno3));
-  corpo.replaceText("<<O3A3>>", formatarNota(dados.oral3aluno3));
-  corpo.replaceText("<<O4A3>>", formatarNota(dados.oral4aluno3));
-  corpo.replaceText("<<O5A3>>", formatarNota(dados.oral5aluno3));
-  corpo.replaceText("<<TOTO3>>", formatarNota(calculos.totalOral3 * calculos.pesoOral));
-
-  corpo.replaceText("<<O1A4>>", formatarNota(dados.oral1aluno4));    
-  corpo.replaceText("<<O2A4>>", formatarNota(dados.oral2aluno4));    
-  corpo.replaceText("<<O3A4>>", formatarNota(dados.oral3aluno4));    
-  corpo.replaceText("<<O4A4>>", formatarNota(dados.oral4aluno4));
-  corpo.replaceText("<<O5A4>>", formatarNota(dados.oral5aluno4));
-  corpo.replaceText("<<TOTO4>>", formatarNota(calculos.totalOral4 * calculos.pesoOral));
+    //total oral com peso 0,4
+    corpo.replaceText("<<TOTO" + aluno + ">>", formatarNota(calculos["totalOral" + aluno] * calculos.pesoOral));
+  }
+  
 
   //notas finais
-  corpo.replaceText("<<FIN1>>", formatarNota(calculos.final1));
-  corpo.replaceText("<<FIN2>>", formatarNota(calculos.final2));
-  corpo.replaceText("<<FIN3>>", formatarNota(calculos.final3));
-  corpo.replaceText("<<FIN4>>", formatarNota(calculos.final4));
+  for (let i = 1; i <= dados.quantidadeAlunos; i++)
+  {
+    corpo.replaceText("<<FIN" + i + ">>", formatarNota(calculos["final" + i]));
+  }
 
   //salva e fecha o documento
   documento.saveAndClose();
@@ -212,40 +209,46 @@ function salvarAvaliacao(dados)
   const totalRelatorio = dados.relatorio1 + dados.relatorio2 + dados.relatorio3
   + dados.relatorio4 + dados.relatorio5;
 
-  //soma dos critérios de Oratória aluno 1
-  const totalOral1 = dados.oral1aluno1 + dados.oral2aluno1 + dados.oral3aluno1
-  + dados.oral4aluno1 + dados.oral5aluno1;
+  //quantidade de alunos para calculo das notas orais
+  const quantidadeAlunos = Number(dados.quantidadeAlunos);
 
-  //soma dos critérios de Oratória aluno 2
-  const totalOral2 = dados.oral1aluno2 + dados.oral2aluno2 + dados.oral3aluno2
-  + dados.oral4aluno2 + dados.oral5aluno2;
+  //objeto que guarda todos os calculos
+  const calculos = {pesoArtigo: pesoArtigo, pesoRelatorio: pesoRelatorio, pesoOral: pesoOral, totalArtigo: totalArtigo, totalRelatorio: totalRelatorio};
 
-  //soma dos critérios de Oratória aluno 3
-  const totalOral3 = dados.oral1aluno3 + dados.oral2aluno3 + dados.oral3aluno3
-  + dados.oral4aluno3 + dados.oral5aluno3;
+  //calcula as notas orais e finais apenas de alunos existentes
+  for (let i = 1; i <= quantidadeAlunos; i++) 
+  {
+    const totalOral = dados["oral1aluno" + i] + dados["oral2aluno" + i] + dados["oral3aluno" +  i] + dados["oral4aluno" + i] + dados["oral5aluno" + i]; 
 
-  //soma dos critérios de Oratória aluno 4
-  const totalOral4 = dados.oral1aluno4 + dados.oral2aluno4 + dados.oral3aluno4
-  + dados.oral4aluno4 + dados.oral5aluno4;
+    const final = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral * pesoOral);
 
-
-  //soma as notas com seus pesos para gerar nota final de cada aluno
-  const final1 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral1 * pesoOral);
-  const final2 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral2 * pesoOral);
-  const final3 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral3 * pesoOral);
-  const final4 = (totalArtigo * pesoArtigo) + (totalRelatorio * pesoRelatorio) + (totalOral4 * pesoOral);
-
-  const calculos = {
-    pesoArtigo: pesoArtigo, pesoRelatorio: pesoRelatorio, pesoOral: pesoOral, totalArtigo: totalArtigo, totalRelatorio: totalRelatorio,
-    totalOral1: totalOral1, totalOral2: totalOral2, totalOral3: totalOral3, totalOral4: totalOral4,
-
-    final1: final1, final2: final2, final3: final3, final4: final4
+    calculos["totalOral" + i] = totalOral;
+    calculos["final" + i] = final;
   }
 
-  //salva o resumo na aba AVALIACOES
-  abaAvaliacoes.appendRow([
-    idAvaliacao, momento.dataHora, dados.orientador, dados.titulo, dados.curso, dados.aluno1, dados.ra1, final1, dados.aluno2, dados.ra2, final2, dados.aluno3, dados.ra3, final3, dados.aluno4, dados.ra4, final4
-  ]);
+
+
+  //monta a linha para a aba AVALIACOES
+  const linhaAvaliacao = [idAvaliacao, momento.dataHora, dados.orientador, dados.titulo, dados.curso];
+
+  //adiciona os dados dos possiveis 5 alunos
+  for (let i = 1; i <= 5; i++) 
+  {
+    if (i <= quantidadeAlunos)
+    {
+      linhaAvaliacao.push(dados["aluno"+ i], dados["ra" + i], calculos["final" + i]);
+    }
+
+    //campos de alunos que não existem ficam vazios
+    else 
+    {
+      linhaAvaliacao.push("", "", "");
+    }
+  }
+
+  //salva a linha completa
+  abaAvaliacoes.appendRow(linhaAvaliacao);
+  
 
   // salva os critérios do artigo na aba ARTIGO
   abaArtigo.appendRow([
@@ -257,25 +260,14 @@ function salvarAvaliacao(dados)
     idAvaliacao, dados.relatorio1, dados.relatorio2, dados.relatorio3, dados.relatorio4, dados.relatorio5, totalRelatorio
   ]);
 
-  //salva os critérios de oratória na aba ORAL - linha do aluno1
-  abaOral.appendRow([
-    idAvaliacao, 1, dados.aluno1, dados.oral1aluno1, dados.oral2aluno1, dados.oral3aluno1, dados.oral4aluno1, dados.oral5aluno1, totalOral1
-  ]);
 
-  //salva os critérios de oratória na aba ORAL - linha do aluno2
-  abaOral.appendRow ([
-    idAvaliacao, 2, dados.aluno2, dados.oral1aluno2, dados.oral2aluno2, dados.oral3aluno2, dados.oral4aluno2, dados.oral5aluno2, totalOral2
-  ]);
-
-  //salva os critérios de oratória na aba ORAL - linha do aluno3
-  abaOral.appendRow ([
-    idAvaliacao, 3, dados.aluno3, dados.oral1aluno3, dados.oral2aluno3, dados.oral3aluno3, dados.oral4aluno3, dados.oral5aluno3, totalOral3
-  ]);
-
-  //salva os critérios de oratória na aba ORAL - linha do aluno4
-  abaOral.appendRow ([
-    idAvaliacao, 4, dados.aluno4, dados.oral1aluno4, dados.oral2aluno4, dados.oral3aluno4, dados.oral4aluno4, dados.oral5aluno4, totalOral4
-  ]);
+  //salva os critérios de oratória somente dos alunos existentes
+  for (let i = 1; i <= quantidadeAlunos; i++)
+  {
+    abaOral.appendRow([
+      idAvaliacao, i, dados["aluno" + i], dados["oral1aluno" + i], dados["oral2aluno" + i], dados["oral3aluno" + i], dados["oral4aluno" + i], dados["oral5aluno" + i], calculos["totalOral" + i]
+    ]);
+  }
 
   //chama a função para gerar a ficha com os dados preenchidos
   const ficha = gerarFichaAvaliacao(dados, calculos, momento);
@@ -284,28 +276,22 @@ function salvarAvaliacao(dados)
   enviarFichaEmail(dados, ficha, momento);
 
   //devolve os resultados para o html
-  return {
+  const resultado = {
     idAvaliacao: idAvaliacao,
     totalArtigo: totalArtigo,
     totalRelatorio: totalRelatorio,
-
-    totalOral1: totalOral1,
-    totalOral2: totalOral2,
-    totalOral3: totalOral3,
-    totalOral4: totalOral4,
-
-    aluno1: dados.aluno1,
-    final1: final1,
-
-    aluno2: dados.aluno2,
-    final2: final2,
-
-    aluno3: dados.aluno3,
-    final3: final3,
-
-    aluno4: dados.aluno4,
-    final4: final4
+    quantidadeAlunos: quantidadeAlunos
   };
+
+  //retorna conforme a quantidade de alunos
+  for (let i = 1; i <= quantidadeAlunos; i++)
+  {
+    resultado["aluno" + i] = dados["aluno" + i];
+    resultado["totalOral" + i] = calculos["totalOral" + i];
+    resultado["final" + i] = calculos["final" + i];
+  }
+
+  return resultado;
 }
 
 //função que envia a ficha em pdf por email
