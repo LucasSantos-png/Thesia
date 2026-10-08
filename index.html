@@ -358,182 +358,472 @@
           grid-template-columns: 1fr;
         }
       }
+
+      .etapa
+      {
+        display: none;
+      }
+
+      .etapa.ativa
+      {
+        display: block;
+      }
+
+
+      .etapas-progresso
+      {
+        display: flex;
+        width: min(1100px, 95%);
+        margin: 30px auto;
+        overflow-x: auto;
+      }
+
+
+      .etapa-indicador
+      {
+        flex: 1;
+        min-width: 145px;
+        padding: 12px 10px;
+        text-align: center;
+
+        background-color: var(--branco);
+        color: var(--texto-secundario);
+
+        border: 2px solid var(--borda);
+
+        font-weight: 700;
+        font-size: 16px;
+      }
+
+
+      .etapa-indicador.ativa
+      {
+        color: var(--azul-escuro);
+        border-color: var(--azul-escuro);
+        background-color: var(--azul-claro);
+      }
+
+
+      .etapa-indicador.concluida
+      {
+        color: var(--azul);
+        border-color: var(--azul);
+      }
+
+
+      .navegacao-etapas
+      {
+        width: min(700px, 90%);
+        margin: 30px auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+
+      #mensagemEtapa
+      {
+        width: min(700px, 90%);
+        margin: 15px auto;
+        text-align: center;
+        color: #b42318;
+        font-weight: 700;
+      }
+
+
+      .campo-invalido
+      {
+        border-color: #c62828 !important;
+        box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.12) !important;
+      }
+
     </style>
   </head>
 
   <body>
     <h1>Thesia</h1>
 
-    <!--Inputs de dados-->
-    <label>Professor(a) Orientador(a): </label>
-    <input type="text" id="orientador">
+    <!--abas de progresso-->
+    <div class="etapas-progresso">
+      <div class="etapa-indicador ativa">Dados do TCC</div>
+      <div class="etapa-indicador">Dados dos Alunos</div>
+      <div class="etapa-indicador">Notas Artigo</div>
+      <div class="etapa-indicador">Notas Relatório</div>
+      <div class="etapa-indicador">Notas Oral</div>
+      <div class="etapa-indicador">Finalização</div>
+    </div>
 
-    <label>Título do TCC: </label>
-    <input type="text" id="titulo">
+    <div class="etapa ativa" id="etapa1">
 
-    <form action="">
-      <p>Curso:</p>
+      <h2>Dados do TCC</h2>
 
-      <div class="curso-opcoes">
-        <label class="curso-item"><input type="radio" name="curso" id="ADM" value="Administração" checked><span>Administração</span></label>
-        <label class="curso-item"><input type="radio" name="curso" id="EC" value="Engenharia de Computação"><span>Engenharia de Computação</span></label>
-      </div>
-    </form>
+       <!--Inputs de dados-->
+      <label>Professor(a) Orientador(a): </label>
+      <input type="text" id="orientador">
 
-    <!--quantidade de alunos-->
-    <label for="quantidadeAlunos">Quantidade de alunos:</label>
-    <select id="quantidadeAlunos" onchange="alterarQuantidadeAlunos()">
-      <option value="1">1 aluno</option>
-      <option value="2">2 alunos</option>
-      <option value="3">3 alunos</option>
-      <option value="4" selected>4 alunos</option>
-      <option value="5">5 alunos</option>
-    </select>
+      <label>Título do TCC: </label>
+      <input type="text" id="titulo">
 
-    <!--input dos nomes dos alunos participantes e seus RAs-->
-    <div id="alunos-container">
+      <form action="">
+        <p>Curso:</p>
 
-      <div class="aluno-linha" id="aluno-linha-1">
-        <div class="campo-aluno">
-          <label for="aluno1">Aluno 1:</label>
-          <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+        <div class="curso-opcoes">
+          <label class="curso-item"><input type="radio" name="curso" id="ADM" value="Administração" checked><span>Administração</span></label>
+          <label class="curso-item"><input type="radio" name="curso" id="EC" value="Engenharia de Computação"><span>Engenharia de Computação</span></label>
         </div>
-        <div class="campo-ra">
-          <label for="RA1">RA:</label>
-          <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
-        </div>
-      </div>
+      </form>
 
-      <div class="aluno-linha" id="aluno-linha-2">
-        <div class="campo-aluno">
-          <label for="aluno2">Aluno 2:</label>
-          <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
-        </div>
-        <div class="campo-ra">
-          <label for="RA2">RA:</label>
-          <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
-        </div>
-      </div>
+      <!--quantidade de alunos-->
+      <label for="quantidadeAlunos">Quantidade de alunos:</label>
+      <select id="quantidadeAlunos" onchange="alterarQuantidadeAlunos()">
+        <option value="1">1 aluno</option>
+        <option value="2">2 alunos</option>
+        <option value="3">3 alunos</option>
+        <option value="4" selected>4 alunos</option>
+        <option value="5">5 alunos</option>
+      </select>
+      
+    </div>
 
-      <div class="aluno-linha" id="aluno-linha-3">
-        <div class="campo-aluno">
-          <label for="aluno3">Aluno 3:</label>
-          <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
-        </div>
-        <div class="campo-ra">
-          <label for="RA3">RA:</label>
-          <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
-        </div>
-      </div>
+    <div class="etapa" id="etapa2">
+      <h2>Dados dos Alunos</h2>
 
-      <div class="aluno-linha" id="aluno-linha-4">
-        <div class="campo-aluno">
-          <label for="aluno4">Aluno 4:</label>
-          <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
-        </div>
-        <div class="campo-ra">
-          <label for="RA4">RA:</label>
-          <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
-        </div>
-      </div>
+      <!--input dos nomes dos alunos participantes e seus RAs-->
+      <div id="alunos-container">
 
-      <div class="aluno-linha" id="aluno-linha-5" style="display:none;">
-        <div class="campo-aluno">
-          <label for="aluno5">Aluno 5:</label>
-          <input type="text" id="aluno5" oninput="atualizarNomeAluno(5)">
+        <div class="aluno-linha" id="aluno-linha-1">
+          <div class="campo-aluno">
+            <label for="aluno1">Aluno 1:</label>
+            <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+          </div>
+          <div class="campo-ra">
+            <label for="RA1">RA:</label>
+            <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
+          </div>
         </div>
-        <div class="campo-ra">
-          <label for="RA5">RA:</label>
-          <input type="text" id="RA5" inputmode="numeric" maxlength="9" class="ra">
+
+        <div class="aluno-linha" id="aluno-linha-2">
+          <div class="campo-aluno">
+            <label for="aluno2">Aluno 2:</label>
+            <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
+          </div>
+          <div class="campo-ra">
+            <label for="RA2">RA:</label>
+            <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
+          </div>
         </div>
+
+        <div class="aluno-linha" id="aluno-linha-3">
+          <div class="campo-aluno">
+            <label for="aluno3">Aluno 3:</label>
+            <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
+          </div>
+          <div class="campo-ra">
+            <label for="RA3">RA:</label>
+            <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
+          </div>
+        </div>
+
+        <div class="aluno-linha" id="aluno-linha-4">
+          <div class="campo-aluno">
+            <label for="aluno4">Aluno 4:</label>
+            <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
+          </div>
+          <div class="campo-ra">
+            <label for="RA4">RA:</label>
+            <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
+          </div>
+        </div>
+
+        <div class="aluno-linha" id="aluno-linha-5" style="display:none;">
+          <div class="campo-aluno">
+            <label for="aluno5">Aluno 5:</label>
+            <input type="text" id="aluno5" oninput="atualizarNomeAluno(5)">
+          </div>
+          <div class="campo-ra">
+            <label for="RA5">RA:</label>
+            <input type="text" id="RA5" inputmode="numeric" maxlength="9" class="ra">
+          </div>
+
+        </div>
+
       </div>
 
     </div>
+   
 
-    <!--notas dos critérios de artigo científico-->
-    <h2>Artigo Científico</h2>
+    <div class="etapa" id="etapa3">
+      <!--notas dos critérios de artigo científico-->
+      <h2>Artigo Científico</h2>
 
-    <label>1. Adequação do tema com as linhas de pesquisa: <b>(Máximo: 1,0)</b></label>
-    <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+      <label>1. Adequação do tema com as linhas de pesquisa: <b>(Máximo: 1,0)</b></label>
+      <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-    <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso de forma integrada: <b>(Máximo: 1,0)</b></label>
-    <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+      <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso de forma integrada: <b>(Máximo: 1,0)</b></label>
+      <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-    <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos para resolução de problemas dentro da área de formação: <b>(Máximo: 2,0)</b></label>
-    <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos para resolução de problemas dentro da área de formação: <b>(Máximo: 2,0)</b></label>
+      <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-    <label>4. Rigor metodológico e sua relação com a análise de resultados: <b>(Máximo: 2,0)</b></label>
-    <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      <label>4. Rigor metodológico e sua relação com a análise de resultados: <b>(Máximo: 2,0)</b></label>
+      <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-    <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <b>(Máximo: 2,0)</b></label>
-    <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+      <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <b>(Máximo: 2,0)</b></label>
+      <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-    <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação da linguagem: <b>(Máximo: 1,0)</b></label>
-    <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+      <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação da linguagem: <b>(Máximo: 1,0)</b></label>
+      <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-    <label>7. Qualidade e originalidade dos argumentos: <b>(Máximo: 1,0)</b></label>
-    <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+      <label>7. Qualidade e originalidade dos argumentos: <b>(Máximo: 1,0)</b></label>
+      <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-    <!--notas dos critérios de relatório técnico-->
-    <h2>Relatório Técnico</h2>
-
-    <label>1. O conteúdo promove a interdisciplinaridade: <b>(Máximo: 2,0)</b></label>
-    <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-
-    <label>2. O conteúdo busca uma linguagem próxima ao mercado: <b>(Máximo: 1,0)</b></label>
-    <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-
-    <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <b>(Máximo: 3,0)</b></label>
-    <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-
-    <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <b>(Máximo: 2,0)</b></label>
-    <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-
-    <label>5. O produto reflete as atividades de pesquisa realizadas: <b>(Máximo: 2,0)</b></label>
-    <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-
-    <!--notas dos critérios de apresentação oral geradas conforme a quantidade de alunos-->
-    <h2>Apresentação oral:</h2>
-    <div id="avaliacao-oral-container"></div>
-
-    <label>Você indicaria este trabalho para submissão na Revista Científica da Faculdade?</label>
-
-    <div class="revista-opcoes">
-      <label class="revista-item">
-        <input type="radio" name="revista" value="Sim">
-        <span>Sim</span>
-      </label>
-
-      <label class="revista-item">
-        <input type="radio" name="revista" value="Não" checked>
-        <span>Não</span>
-      </label>
     </div>
 
-    <label for="email">E-mail para receber uma cópia da ficha:</label>
-    <input type="email" name="email" id="email" placeholder="seuemail@dominio.com">
+    
+    <div class="etapa" id="etapa4">
 
-    <label for="email2">(Opcional) Segundo e-mail:</label>
-    <input type="email" name="email2" id="email2" placeholder="adicional@dominio.com">
+      <!--notas dos critérios de relatório técnico-->
+      <h2>Relatório Técnico</h2>
 
-    <div class="acoes">
-      <button type="button" onclick="calcular()">Calcular</button>
-      <button type="button" onclick="salvarAvaliacao()">Salvar avaliação</button>
+      <label>1. O conteúdo promove a interdisciplinaridade: <b>(Máximo: 2,0)</b></label>
+      <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+
+      <label>2. O conteúdo busca uma linguagem próxima ao mercado: <b>(Máximo: 1,0)</b></label>
+      <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+
+      <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <b>(Máximo: 3,0)</b></label>
+      <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
+
+      <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <b>(Máximo: 2,0)</b></label>
+      <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+
+      <label>5. O produto reflete as atividades de pesquisa realizadas: <b>(Máximo: 2,0)</b></label>
+      <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+
+    </div>
+    
+
+    <div class="etapa" id="etapa5">
+
+      <!--notas dos critérios de apresentação oral geradas conforme a quantidade de alunos-->
+      <h2>Apresentação oral:</h2>
+      <div id="avaliacao-oral-container"></div>
+
     </div>
 
-    <!--para feedback de salvando/erro-->
-    <p id="mensagem"></p>
+    <div class="etapa" id="etapa6">
 
-    <h2>Resultados</h2>
+      <h2>Finalização</h2>
 
-    <!--exibe as notas calculadas antes de enviar/salvar-->
-    <p id="resultado1"></p>
-    <p id="resultado2"></p>
-    <p id="resultado3"></p>
-    <p id="resultado4"></p>
-    <p id="resultado5"></p>
+      <label>Você indicaria este trabalho para submissão na Revista Científica da Faculdade?</label>
+
+      <div class="revista-opcoes">
+        <label class="revista-item">
+          <input type="radio" name="revista" value="Sim">
+          <span>Sim</span>
+        </label>
+
+        <label class="revista-item">
+          <input type="radio" name="revista" value="Não" checked>
+          <span>Não</span>
+        </label>
+      </div>
+
+      <label for="email">E-mail para receber uma cópia da ficha:</label>
+      <input type="email" name="email" id="email" placeholder="seuemail@dominio.com">
+
+      <label for="email2">(Opcional) Segundo e-mail:</label>
+      <input type="email" name="email2" id="email2" placeholder="adicional@dominio.com">
+
+      <div class="acoes">
+        <button type="button" onclick="calcular()">Calcular</button>
+        <button type="button" onclick="salvarAvaliacao()">Salvar avaliação</button>
+      </div>
+
+      <!--para feedback de salvando/erro-->
+      <p id="mensagem"></p>
+
+      <h2>Resultados</h2>
+
+      <!--exibe as notas calculadas antes de enviar/salvar-->
+      <p id="resultado1"></p>
+      <p id="resultado2"></p>
+      <p id="resultado3"></p>
+      <p id="resultado4"></p>
+      <p id="resultado5"></p>
+
+    </div>
+
+    <p id="mensagemEtapa"></p>
+
+    <div class="navegacao-etapas">
+      <button type="button" id="botaoVoltar" onclick="voltarEtapa()">Voltar</button>
+      <button type="button" id="botaoProximo" onclick="proximaEtapa()">Próximo</button>
+    </div>
+
 
     <script>
+      //funcao relacionada as abas/etapas da avaliacao
+      let etapaAtual = 1;
+
+      const totalEtapas = 6;
+
+      function mostrarEtapa(numero)
+      {
+        document.querySelectorAll(".etapa").forEach(function(etapa)
+        {
+          etapa.classList.remove("ativa");
+        });
+
+
+        document.getElementById("etapa" + numero).classList.add("ativa");
+
+
+        const indicadores = document.querySelectorAll(".etapa-indicador");
+
+        indicadores.forEach(function(indicador, indice)
+        {
+          indicador.classList.remove("ativa");
+          indicador.classList.remove("concluida");
+
+
+          if (indice + 1 === numero)
+          {
+            indicador.classList.add("ativa");
+          }
+
+          else if (indice + 1 < numero)
+          {
+            indicador.classList.add("concluida");
+          }
+        });
+
+
+        document.getElementById("botaoVoltar").style.visibility =
+          numero === 1 ? "hidden" : "visible";
+
+
+        document.getElementById("botaoProximo").style.visibility =
+          numero === totalEtapas ? "hidden" : "visible";
+
+
+        document.getElementById("mensagemEtapa").innerText = "";
+
+        window.scrollTo(0, 0);
+      }
+
+      function voltarEtapa()
+      {
+        if (etapaAtual > 1)
+        {
+          etapaAtual--;
+
+          mostrarEtapa(etapaAtual);
+        }
+      }
+
+      function proximaEtapa()
+      {
+        if (!validarEtapa(etapaAtual))
+        {
+          return;
+        }
+
+
+        if (etapaAtual < totalEtapas)
+        {
+          etapaAtual++;
+
+          mostrarEtapa(etapaAtual);
+        }
+      }
+
+      function validarEtapa(numero)
+      {
+        const dados = pegarDados();
+
+        limparCamposInvalidos();
+
+
+        //ETAPA 1 - DADOS DO TCC
+        if (numero === 1)
+        {
+          if (dados.orientador === "")
+          {
+            marcarCampoInvalido("orientador", "Informe o professor(a) orientador(a).");
+            return false;
+          }
+
+
+          if (dados.titulo === "")
+          {
+            marcarCampoInvalido("titulo", "Informe o título do TCC.");
+            return false;
+          }
+
+
+          return true;
+        }
+
+
+        //ETAPA 2 - DADOS DOS ALUNOS
+        if (numero === 2)
+        {
+          const raValido = /^\d{9}$/;
+
+
+          for (let aluno = 1; aluno <= dados.quantidadeAlunos; aluno++)
+          {
+            if (dados["aluno" + aluno] === "")
+            {
+              marcarCampoInvalido(
+                "aluno" + aluno,
+                "Informe o nome do Aluno " + aluno + "."
+              );
+
+              return false;
+            }
+
+
+            if (!raValido.test(dados["ra" + aluno]))
+            {
+              marcarCampoInvalido(
+                "RA" + aluno,
+                "O RA do Aluno " + aluno + " deve ter exatamente 9 números."
+              );
+
+              return false;
+            }
+          }
+
+          return true;
+        }
+
+        return true;
+      }
+
+      function marcarCampoInvalido(idCampo, mensagem)
+      {
+        const campo = document.getElementById(idCampo);
+
+        campo.classList.add("campo-invalido");
+
+        campo.focus();
+
+        document.getElementById("mensagemEtapa").innerText = mensagem;
+      }
+
+      function limparCamposInvalidos()
+      {
+        document.querySelectorAll(".campo-invalido").forEach(function(campo)
+        {
+          campo.classList.remove("campo-invalido");
+        });
+
+
+        document.getElementById("mensagemEtapa").innerText = "";
+      }
+
       //função que converte de texto para número e verifica se o valor é válido
       function converterNota(valor, notaMaxima)
       {
@@ -992,6 +1282,7 @@
       //configuração inicial da página
       window.addEventListener("load", function()
       {
+        mostrarEtapa(etapaAtual);
         alterarQuantidadeAlunos();
         aplicarEventosNotas();
 
