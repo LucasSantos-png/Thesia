@@ -373,9 +373,10 @@
       .etapas-progresso
       {
         display: flex;
-        width: min(1100px, 95%);
-        margin: 30px auto;
+        width: calc(100% + 40px);
+        margin: 0 -20px 30px;
         overflow-x: auto;
+        border-radius: 14px 14px 0;
       }
 
 
@@ -393,6 +394,16 @@
 
         font-weight: 700;
         font-size: 16px;
+      }
+
+      .etapa-indicador:first-child 
+      {
+        border-top-left-radius: 14px;
+      }
+
+      .etapa-indicador:last-child 
+      {
+        border-top-right-radius: 14px;
       }
 
 
@@ -414,7 +425,7 @@
       .navegacao-etapas
       {
         width: min(700px, 90%);
-        margin: 30px auto;
+        margin: auto;
         display: flex;
         justify-content: space-between;
         gap: 20px;
@@ -437,230 +448,249 @@
         box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.12) !important;
       }
 
+      .janela-formulario
+      {
+        width: min(1180px, 96%);
+        margin: 30px auto;
+        padding: 0 20px 30px;
+
+        background-color: rgba(250, 250, 250, 0.30);
+
+        border: 1px solid rgba(0, 59, 115, 0.08);
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+        border-top: none;
+
+        box-shadow: var(--sombra);
+      }
+
     </style>
   </head>
 
   <body>
     <h1>Thesia</h1>
 
-    <!--abas de progresso-->
-    <div class="etapas-progresso">
-      <div class="etapa-indicador ativa">Dados do TCC</div>
-      <div class="etapa-indicador">Dados dos Alunos</div>
-      <div class="etapa-indicador">Notas Artigo</div>
-      <div class="etapa-indicador">Notas Relatório</div>
-      <div class="etapa-indicador">Notas Oral</div>
-      <div class="etapa-indicador">Finalização</div>
-    </div>
+    <div class="janela-formulario">
 
-    <div class="etapa ativa" id="etapa1">
+      <!--abas de progresso-->
+      <div class="etapas-progresso">
+        <div class="etapa-indicador ativa">Dados do TCC</div>
+        <div class="etapa-indicador">Dados dos Alunos</div>
+        <div class="etapa-indicador">Notas Artigo</div>
+        <div class="etapa-indicador">Notas Relatório</div>
+        <div class="etapa-indicador">Notas Oral</div>
+        <div class="etapa-indicador">Finalização</div>
+      </div>
 
-      <h2>Dados do TCC</h2>
+      <div class="etapa ativa" id="etapa1">
 
-       <!--Inputs de dados-->
-      <label>Professor(a) Orientador(a): </label>
-      <input type="text" id="orientador">
+        <h2>Dados do TCC</h2>
 
-      <label>Título do TCC: </label>
-      <input type="text" id="titulo">
+        <!--Inputs de dados-->
+        <label>Professor(a) Orientador(a): </label>
+        <input type="text" id="orientador">
 
-      <form action="">
-        <p>Curso:</p>
+        <label>Título do TCC: </label>
+        <input type="text" id="titulo">
 
-        <div class="curso-opcoes">
-          <label class="curso-item"><input type="radio" name="curso" id="ADM" value="Administração" checked><span>Administração</span></label>
-          <label class="curso-item"><input type="radio" name="curso" id="EC" value="Engenharia de Computação"><span>Engenharia de Computação</span></label>
+        <form action="">
+          <p>Curso:</p>
+
+          <div class="curso-opcoes">
+            <label class="curso-item"><input type="radio" name="curso" id="ADM" value="Administração" checked><span>Administração</span></label>
+            <label class="curso-item"><input type="radio" name="curso" id="EC" value="Engenharia de Computação"><span>Engenharia de Computação</span></label>
+          </div>
+        </form>
+
+        <!--quantidade de alunos-->
+        <label for="quantidadeAlunos">Quantidade de alunos:</label>
+        <select id="quantidadeAlunos" onchange="alterarQuantidadeAlunos()">
+          <option value="1">1 aluno</option>
+          <option value="2">2 alunos</option>
+          <option value="3">3 alunos</option>
+          <option value="4" selected>4 alunos</option>
+          <option value="5">5 alunos</option>
+        </select>
+        
+      </div>
+
+      <div class="etapa" id="etapa2">
+        <h2>Dados dos Alunos</h2>
+
+        <!--input dos nomes dos alunos participantes e seus RAs-->
+        <div id="alunos-container">
+
+          <div class="aluno-linha" id="aluno-linha-1">
+            <div class="campo-aluno">
+              <label for="aluno1">Aluno 1:</label>
+              <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
+            </div>
+            <div class="campo-ra">
+              <label for="RA1">RA:</label>
+              <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
+            </div>
+          </div>
+
+          <div class="aluno-linha" id="aluno-linha-2">
+            <div class="campo-aluno">
+              <label for="aluno2">Aluno 2:</label>
+              <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
+            </div>
+            <div class="campo-ra">
+              <label for="RA2">RA:</label>
+              <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
+            </div>
+          </div>
+
+          <div class="aluno-linha" id="aluno-linha-3">
+            <div class="campo-aluno">
+              <label for="aluno3">Aluno 3:</label>
+              <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
+            </div>
+            <div class="campo-ra">
+              <label for="RA3">RA:</label>
+              <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
+            </div>
+          </div>
+
+          <div class="aluno-linha" id="aluno-linha-4">
+            <div class="campo-aluno">
+              <label for="aluno4">Aluno 4:</label>
+              <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
+            </div>
+            <div class="campo-ra">
+              <label for="RA4">RA:</label>
+              <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
+            </div>
+          </div>
+
+          <div class="aluno-linha" id="aluno-linha-5" style="display:none;">
+            <div class="campo-aluno">
+              <label for="aluno5">Aluno 5:</label>
+              <input type="text" id="aluno5" oninput="atualizarNomeAluno(5)">
+            </div>
+            <div class="campo-ra">
+              <label for="RA5">RA:</label>
+              <input type="text" id="RA5" inputmode="numeric" maxlength="9" class="ra">
+            </div>
+
+          </div>
+
         </div>
-      </form>
 
-      <!--quantidade de alunos-->
-      <label for="quantidadeAlunos">Quantidade de alunos:</label>
-      <select id="quantidadeAlunos" onchange="alterarQuantidadeAlunos()">
-        <option value="1">1 aluno</option>
-        <option value="2">2 alunos</option>
-        <option value="3">3 alunos</option>
-        <option value="4" selected>4 alunos</option>
-        <option value="5">5 alunos</option>
-      </select>
+      </div>
+    
+
+      <div class="etapa" id="etapa3">
+        <!--notas dos critérios de artigo científico-->
+        <h2>Artigo Científico</h2>
+
+        <label>1. Adequação do tema com as linhas de pesquisa: <b>(Máximo: 1,0)</b></label>
+        <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+
+        <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso de forma integrada: <b>(Máximo: 1,0)</b></label>
+        <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+
+        <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos para resolução de problemas dentro da área de formação: <b>(Máximo: 2,0)</b></label>
+        <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+
+        <label>4. Rigor metodológico e sua relação com a análise de resultados: <b>(Máximo: 2,0)</b></label>
+        <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+
+        <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <b>(Máximo: 2,0)</b></label>
+        <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+
+        <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação da linguagem: <b>(Máximo: 1,0)</b></label>
+        <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+
+        <label>7. Qualidade e originalidade dos argumentos: <b>(Máximo: 1,0)</b></label>
+        <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+
+      </div>
+
       
-    </div>
+      <div class="etapa" id="etapa4">
 
-    <div class="etapa" id="etapa2">
-      <h2>Dados dos Alunos</h2>
+        <!--notas dos critérios de relatório técnico-->
+        <h2>Relatório Técnico</h2>
 
-      <!--input dos nomes dos alunos participantes e seus RAs-->
-      <div id="alunos-container">
+        <label>1. O conteúdo promove a interdisciplinaridade: <b>(Máximo: 2,0)</b></label>
+        <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-        <div class="aluno-linha" id="aluno-linha-1">
-          <div class="campo-aluno">
-            <label for="aluno1">Aluno 1:</label>
-            <input type="text" id="aluno1" oninput="atualizarNomeAluno(1)">
-          </div>
-          <div class="campo-ra">
-            <label for="RA1">RA:</label>
-            <input type="text" id="RA1" inputmode="numeric" maxlength="9" class="ra">
-          </div>
-        </div>
+        <label>2. O conteúdo busca uma linguagem próxima ao mercado: <b>(Máximo: 1,0)</b></label>
+        <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
 
-        <div class="aluno-linha" id="aluno-linha-2">
-          <div class="campo-aluno">
-            <label for="aluno2">Aluno 2:</label>
-            <input type="text" id="aluno2" oninput="atualizarNomeAluno(2)">
-          </div>
-          <div class="campo-ra">
-            <label for="RA2">RA:</label>
-            <input type="text" id="RA2" inputmode="numeric" maxlength="9" class="ra">
-          </div>
-        </div>
+        <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <b>(Máximo: 3,0)</b></label>
+        <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
 
-        <div class="aluno-linha" id="aluno-linha-3">
-          <div class="campo-aluno">
-            <label for="aluno3">Aluno 3:</label>
-            <input type="text" id="aluno3" oninput="atualizarNomeAluno(3)">
-          </div>
-          <div class="campo-ra">
-            <label for="RA3">RA:</label>
-            <input type="text" id="RA3" inputmode="numeric" maxlength="9" class="ra">
-          </div>
-        </div>
+        <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <b>(Máximo: 2,0)</b></label>
+        <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-        <div class="aluno-linha" id="aluno-linha-4">
-          <div class="campo-aluno">
-            <label for="aluno4">Aluno 4:</label>
-            <input type="text" id="aluno4" oninput="atualizarNomeAluno(4)">
-          </div>
-          <div class="campo-ra">
-            <label for="RA4">RA:</label>
-            <input type="text" id="RA4" inputmode="numeric" maxlength="9" class="ra">
-          </div>
-        </div>
+        <label>5. O produto reflete as atividades de pesquisa realizadas: <b>(Máximo: 2,0)</b></label>
+        <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
 
-        <div class="aluno-linha" id="aluno-linha-5" style="display:none;">
-          <div class="campo-aluno">
-            <label for="aluno5">Aluno 5:</label>
-            <input type="text" id="aluno5" oninput="atualizarNomeAluno(5)">
-          </div>
-          <div class="campo-ra">
-            <label for="RA5">RA:</label>
-            <input type="text" id="RA5" inputmode="numeric" maxlength="9" class="ra">
-          </div>
+      </div>
+      
 
-        </div>
+      <div class="etapa" id="etapa5">
+
+        <!--notas dos critérios de apresentação oral geradas conforme a quantidade de alunos-->
+        <h2>Apresentação oral:</h2>
+        <div id="avaliacao-oral-container"></div>
 
       </div>
 
-    </div>
-   
+      <div class="etapa" id="etapa6">
 
-    <div class="etapa" id="etapa3">
-      <!--notas dos critérios de artigo científico-->
-      <h2>Artigo Científico</h2>
+        <h2>Finalização</h2>
 
-      <label>1. Adequação do tema com as linhas de pesquisa: <b>(Máximo: 1,0)</b></label>
-      <input type="text" id="artigo1" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+        <label>Você indicaria este trabalho para submissão na Revista Científica da Faculdade?</label>
 
-      <label>2. Aplicação dos conceitos e teorias adquiridas durante o curso de forma integrada: <b>(Máximo: 1,0)</b></label>
-      <input type="text" id="artigo2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+        <div class="revista-opcoes">
+          <label class="revista-item">
+            <input type="radio" name="revista" value="Sim">
+            <span>Sim</span>
+          </label>
 
-      <label>3. Contribuição dos resultados obtidos e estudos futuros sugeridos para resolução de problemas dentro da área de formação: <b>(Máximo: 2,0)</b></label>
-      <input type="text" id="artigo3" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+          <label class="revista-item">
+            <input type="radio" name="revista" value="Não" checked>
+            <span>Não</span>
+          </label>
+        </div>
 
-      <label>4. Rigor metodológico e sua relação com a análise de resultados: <b>(Máximo: 2,0)</b></label>
-      <input type="text" id="artigo4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+        <label for="email">E-mail para receber uma cópia da ficha:</label>
+        <input type="email" name="email" id="email" placeholder="seuemail@dominio.com">
 
-      <label>5. Atendimento a normalização ABNT e ao template da Faculdade: <b>(Máximo: 2,0)</b></label>
-      <input type="text" id="artigo5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
+        <label for="email2">(Opcional) Segundo e-mail:</label>
+        <input type="email" name="email2" id="email2" placeholder="adicional@dominio.com">
 
-      <label>6. Clareza, contextualização, suficiência da quantidade da informação e adequação da linguagem: <b>(Máximo: 1,0)</b></label>
-      <input type="text" id="artigo6" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+        <div class="acoes">
+          <button type="button" onclick="calcular()">Calcular</button>
+          <button type="button" onclick="salvarAvaliacao()">Salvar avaliação</button>
+        </div>
 
-      <label>7. Qualidade e originalidade dos argumentos: <b>(Máximo: 1,0)</b></label>
-      <input type="text" id="artigo7" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
+        <!--para feedback de salvando/erro-->
+        <p id="mensagem"></p>
 
-    </div>
+        <h2>Resultados</h2>
 
-    
-    <div class="etapa" id="etapa4">
+        <!--exibe as notas calculadas antes de enviar/salvar-->
+        <p id="resultado1"></p>
+        <p id="resultado2"></p>
+        <p id="resultado3"></p>
+        <p id="resultado4"></p>
+        <p id="resultado5"></p>
 
-      <!--notas dos critérios de relatório técnico-->
-      <h2>Relatório Técnico</h2>
-
-      <label>1. O conteúdo promove a interdisciplinaridade: <b>(Máximo: 2,0)</b></label>
-      <input type="text" id="relatorio1" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-
-      <label>2. O conteúdo busca uma linguagem próxima ao mercado: <b>(Máximo: 1,0)</b></label>
-      <input type="text" id="relatorio2" inputmode="decimal" placeholder="Ex: 0,5" class="nota">
-
-      <label>3. Apresentação de inovação, tendo como base os resultados da pesquisa: <b>(Máximo: 3,0)</b></label>
-      <input type="text" id="relatorio3" inputmode="decimal" placeholder="Ex: 2,5" class="nota">
-
-      <label>4. Os alunos demonstram visão crítica e reflexiva acerca do tema: <b>(Máximo: 2,0)</b></label>
-      <input type="text" id="relatorio4" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-
-      <label>5. O produto reflete as atividades de pesquisa realizadas: <b>(Máximo: 2,0)</b></label>
-      <input type="text" id="relatorio5" inputmode="decimal" placeholder="Ex: 1,5" class="nota">
-
-    </div>
-    
-
-    <div class="etapa" id="etapa5">
-
-      <!--notas dos critérios de apresentação oral geradas conforme a quantidade de alunos-->
-      <h2>Apresentação oral:</h2>
-      <div id="avaliacao-oral-container"></div>
-
-    </div>
-
-    <div class="etapa" id="etapa6">
-
-      <h2>Finalização</h2>
-
-      <label>Você indicaria este trabalho para submissão na Revista Científica da Faculdade?</label>
-
-      <div class="revista-opcoes">
-        <label class="revista-item">
-          <input type="radio" name="revista" value="Sim">
-          <span>Sim</span>
-        </label>
-
-        <label class="revista-item">
-          <input type="radio" name="revista" value="Não" checked>
-          <span>Não</span>
-        </label>
       </div>
 
-      <label for="email">E-mail para receber uma cópia da ficha:</label>
-      <input type="email" name="email" id="email" placeholder="seuemail@dominio.com">
+      <p id="mensagemEtapa"></p>
 
-      <label for="email2">(Opcional) Segundo e-mail:</label>
-      <input type="email" name="email2" id="email2" placeholder="adicional@dominio.com">
-
-      <div class="acoes">
-        <button type="button" onclick="calcular()">Calcular</button>
-        <button type="button" onclick="salvarAvaliacao()">Salvar avaliação</button>
+      <div class="navegacao-etapas">
+        <button type="button" id="botaoVoltar" onclick="voltarEtapa()">Voltar</button>
+        <button type="button" id="botaoProximo" onclick="proximaEtapa()">Próximo</button>
       </div>
 
-      <!--para feedback de salvando/erro-->
-      <p id="mensagem"></p>
-
-      <h2>Resultados</h2>
-
-      <!--exibe as notas calculadas antes de enviar/salvar-->
-      <p id="resultado1"></p>
-      <p id="resultado2"></p>
-      <p id="resultado3"></p>
-      <p id="resultado4"></p>
-      <p id="resultado5"></p>
-
     </div>
-
-    <p id="mensagemEtapa"></p>
-
-    <div class="navegacao-etapas">
-      <button type="button" id="botaoVoltar" onclick="voltarEtapa()">Voltar</button>
-      <button type="button" id="botaoProximo" onclick="proximaEtapa()">Próximo</button>
-    </div>
-
 
     <script>
       //funcao relacionada as abas/etapas da avaliacao
@@ -1257,9 +1287,14 @@
 
       //função usada para calcular as notas finais dos alunos e exibir no html
       function calcular()
-      {
+      {     
         const dados = pegarDados();
         const validacao = validarDados(dados);
+
+        if (!validarEtapa(6))
+        {
+          return;
+        }
 
         if (!validacao.valido)
         {
@@ -1302,6 +1337,11 @@
       {
         const dados = pegarDados();
         const validacao = validarDados(dados);
+
+        if (!validarEtapa(6))
+        {
+          return;
+        }
 
         if (!validacao.valido)
         {
