@@ -151,6 +151,18 @@ function gerarFichaAvaliacao(dados, calculos, momento)
     corpo.replaceText("<<FIN" + i + ">>", formatarNota(calculos["final" + i]));
   }
 
+  //marca a caixa de revista científica
+  if (dados.revista === "Sim") 
+  {
+    corpo.replaceText("<<R_SIM>>", "☒");
+    corpo.replaceText("<<R_NAO>>", "☐");
+  }
+  else 
+  {
+    corpo.replaceText("<<R_SIM>>", "☐");
+    corpo.replaceText("<<R_NAO>>", "☒");
+  }
+
   //salva e fecha o documento
   documento.saveAndClose();
 
@@ -246,6 +258,9 @@ function salvarAvaliacao(dados)
     }
   }
 
+  //indicacao para revista cientifica
+  linhaAvaliacao.push(dados.revista);
+  
   //salva a linha completa
   abaAvaliacoes.appendRow(linhaAvaliacao);
   
@@ -308,9 +323,27 @@ function enviarFichaEmail(dados, ficha, momento)
   "Data: " + momento.data + "\n" + "Horário: " + momento.hora + "\n" + "Curso: " + dados.curso + "\n" + "Orientador(a): " + 
   dados.orientador + "\n\n" + "A ficha de avaliação em PDF segue anexada a este e-mail.\n\n" + "Atenciosamente,\n" + "Thesia";
 
-  GmailApp.sendEmail(dados.email, assunto, mensagem,
-    {
-      attachments: [arquivoPdf.getBlob()], name: "Thesia"
-    }
+  //configura o email
+  const opcoesEmail =
+  {
+    attachments: [arquivoPdf.getBlob()],
+    name: "Thesia"
+  };
+
+
+  //adiciona o segundo email como cópia se tiver sido preenchido
+  if (dados.email2 !== "")
+  {
+    opcoesEmail.cc = dados.email2;
+  }
+
+
+  //envia o email
+  GmailApp.sendEmail(
+    dados.email,
+    assunto,
+    mensagem,
+    opcoesEmail
   );
+
 }
