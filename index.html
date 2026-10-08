@@ -799,6 +799,98 @@
           return true;
         }
 
+        //ETAPA 3 - ARTIGO CIENTÍFICO
+        if (numero === 3)
+        {
+          for (let criterio = 1; criterio <= 7; criterio++)
+          {
+            if (dados["artigo" + criterio] === null)
+            {
+              marcarCampoInvalido(
+                "artigo" + criterio,
+                "Preencha corretamente a nota do critério " + criterio + " do Artigo Científico."
+              );
+
+              return false;
+            }
+          }
+
+          return true;
+        }
+
+
+        //ETAPA 4 - RELATÓRIO TÉCNICO
+        if (numero === 4)
+        {
+          for (let criterio = 1; criterio <= 5; criterio++)
+          {
+            if (dados["relatorio" + criterio] === null)
+            {
+              marcarCampoInvalido(
+                "relatorio" + criterio,
+                "Preencha corretamente a nota do critério " + criterio + " do Relatório Técnico."
+              );
+
+              return false;
+            }
+          }
+
+          return true;
+        }
+
+
+        //ETAPA 5 - APRESENTAÇÃO ORAL
+        if (numero === 5)
+        {
+          for (let aluno = 1; aluno <= dados.quantidadeAlunos; aluno++)
+          {
+            for (let criterio = 1; criterio <= 5; criterio++)
+            {
+              const idCampo = "oral" + criterio + "aluno" + aluno;
+
+              if (dados[idCampo] === null)
+              {
+                marcarCampoInvalido(
+                  idCampo,
+                  "Preencha corretamente a nota do Aluno " + aluno + " no critério " + criterio + " da Apresentação Oral."
+                );
+
+                return false;
+              }
+            }
+          }
+
+          return true;
+        }
+
+        //ETAPA 6 - FINALIZAÇÃO
+        if (numero === 6)
+        {
+          const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          if (dados.email === "" || !emailValido.test(dados.email))
+          {
+            marcarCampoInvalido(
+              "email",
+              "Informe um e-mail válido."
+            );
+
+            return false;
+          }
+
+          if (dados.email2 !== "" && !emailValido.test(dados.email2))
+          {
+            marcarCampoInvalido(
+              "email2",
+              "Informe um segundo e-mail válido."
+            );
+
+            return false;
+          }
+
+          return true;
+        }
+
         return true;
       }
 
