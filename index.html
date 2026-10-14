@@ -1318,7 +1318,7 @@
 
         <div class="acoes">
 
-          <button type="button" id="botaoVoldarFinalizacao" onclick="voltarEtapa()">Voltar</button>
+          <button type="button" onclick="voltarEtapa()">Voltar</button>
           <button type="button" onclick="calcular()">Calcular</button>
           <button type="button" id="botaoEnviar" onclick="salvarAvaliacao()">Enviar avaliação</button>
 
@@ -1370,9 +1370,15 @@
 
     <!-- POP-UP DE CONFIRMAÇÃO PARA INICIAR OUTRA AVALIAÇÃO -->
     <div id="popupConfirmacao" class="popup-confirmacao" hidden>
-      <div class="confirmacao-conteudo" role="alertdialog" aria-modal="true" aria-labelledby="tituloConfirmacao" aria-describedby="textoConfirmacao">
+      <div class="confirmacao-conteudo"
+           role="alertdialog"
+           aria-modal="true"
+           aria-labelledby="tituloConfirmacao"
+           aria-describedby="textoConfirmacao">
         <h2 id="tituloConfirmacao">Iniciar nova avaliação?</h2>
-        <p id="textoConfirmacao">A avaliação anterior já foi salva com sucesso. Deseja limpar os dados da tela para iniciar uma nova avaliação?</p>
+        <p id="textoConfirmacao">
+          A avaliação anterior já foi salva com sucesso. Deseja limpar os dados da tela para iniciar uma nova avaliação?
+        </p>
         <p class="aviso-confirmacao">A avaliação anterior continuará salva no sistema.</p>
 
         <div class="botoes-confirmacao">
@@ -1419,7 +1425,7 @@
 
         });
 
-        //esconde o botao voltar na primeira e ultima aba (o botão muda de lugar na ultima)
+        //esconde o botao voltar na primeira e ultima aba (na ultima o botao muda de lugar)
         document.getElementById("botaoVoltar").style.visibility = numero === 1 || numero === totalEtapas ? "hidden" : "visible";
 
         //esconde o botao proximo na ultima aba
