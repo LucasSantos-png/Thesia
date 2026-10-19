@@ -1,8 +1,26 @@
-/*função que exibe o site*/
+/*função que exibe o site e configura as imagens*/
 function doGet() 
 {
-  return HtmlService.createHtmlOutputFromFile('index')
-  .setTitle('Thesia');
+  const template = HtmlService.createTemplateFromFile("index");
+
+  template.logoThesia = obterImagemBase64(CONFIG.ID_IMAGEM_THESIA);
+
+  template.logoFaculdade = obterImagemBase64(CONFIG.ID_IMAGEM_FACULDADE);
+
+  return template.evaluate().setTitle("Thesia");
+}
+
+function obterImagemBase64(idImagem) 
+{
+  if (!idImagem) 
+  {
+    throw new Error("ID da imagem não configurado.");
+  }
+
+  const arquivo = DriveApp.getFileById(idImagem);
+  const blob = arquivo.getBlob();
+  const base64 = Utilities.base64Encode(blob.getBytes());
+  return "data:" + blob.getContentType() + ";base64," + base64;
 }
 
 //objeto que armazena os IDs de arquivos usados do drive
@@ -18,7 +36,10 @@ const CONFIG =
   MODELO_DOC_2_ID: propriedades.getProperty('MODELO_DOC_2_ID'),
   MODELO_DOC_3_ID: propriedades.getProperty('MODELO_DOC_3_ID'),
   MODELO_DOC_4_ID: propriedades.getProperty('MODELO_DOC_4_ID'),
-  MODELO_DOC_5_ID: propriedades.getProperty('MODELO_DOC_5_ID')
+  MODELO_DOC_5_ID: propriedades.getProperty('MODELO_DOC_5_ID'),
+
+  ID_IMAGEM_THESIA: propriedades.getProperty('ID_IMAGEM_THESIA'),
+  ID_IMAGEM_FACULDADE: propriedades.getProperty('ID_IMAGEM_FACULDADE')
 }
 
 
